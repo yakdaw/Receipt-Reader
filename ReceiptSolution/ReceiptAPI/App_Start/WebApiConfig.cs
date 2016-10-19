@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace ReceiptAPI
+namespace Receipt.API
 {
     public static class WebApiConfig
     {

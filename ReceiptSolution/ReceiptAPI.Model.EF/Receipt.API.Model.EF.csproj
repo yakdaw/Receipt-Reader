@@ -7,8 +7,8 @@
     <ProjectGuid>{D0C2AD5E-7E2B-48AF-B835-66A72C48DD77}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReceiptAPI.Model.EF</RootNamespace>
-    <AssemblyName>ReceiptAPI.Model.EF</AssemblyName>
+    <RootNamespace>Receipt.API.Model.EF</RootNamespace>
+    <AssemblyName>Receipt.API.Model.EF</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Receipt.Domain\Receipt.Domain.csproj">
+      <Project>{268CDE6D-827A-4741-8391-C62D8A668BF5}</Project>
+      <Name>Receipt.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReceiptAPI.Model\Receipt.API.Model.csproj">
+      <Project>{BF00B3D6-2B92-4C9C-95BB-C60EDB20C5C6}</Project>
+      <Name>Receipt.API.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

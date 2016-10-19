@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Receipt.Domain.Entities
+﻿namespace Receipt.Domain.Entities
 {
+    using System;
+
     public class Product
     {
         public int ID { get; set; }
