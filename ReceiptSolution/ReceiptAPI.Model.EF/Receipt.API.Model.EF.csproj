@@ -69,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Receipt.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Mappers\ProductMapper.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
