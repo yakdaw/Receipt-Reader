@@ -6,17 +6,20 @@
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public decimal Price { get; set; }
         public string Category { get; set; }
-        public string purchasePlace { get; set; }
-        public DateTime purchaseDate { get; set; }
-        public DateTime addDate { get; set; }
-   
-        public Product(string name, string category, string purchasePlace, DateTime purchaseDate)
-        {
-            this.Name = name;
-            this.Category = category;
-            this.purchasePlace = purchasePlace;
-            this.purchaseDate = purchaseDate;
-        }
+        public string PurchasePlace { get; set; }
+        public DateTime? PurchaseDate { get; set; }
+        public DateTime AddDate { get; set; }
+
+        public Product() { }
+
+        //public Product(string name, string category, string purchasePlace, DateTime purchaseDate)
+        //{
+        //    this.Name = name;
+        //    this.Category = category;
+        //    this.PurchasePlace = purchasePlace;
+        //    this.PurchaseDate = purchaseDate;
+        //}
     }
 }

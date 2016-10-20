@@ -16,6 +16,7 @@ namespace Receipt.API.Model.EF.DatabaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public decimal Price { get; set; }
         public string Category { get; set; }
         public string PurchasePlace { get; set; }
         public Nullable<System.DateTime> PurchaseDate { get; set; }
