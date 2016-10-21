@@ -8,6 +8,7 @@ using Receipt.API.Model.EF;
 using Receipt.API.Model;
 using Autofac.Integration.WebApi;
 using System.Reflection;
+using System.Net.Http.Headers;
 
 namespace Receipt.API
 {
@@ -23,6 +24,8 @@ namespace Receipt.API
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

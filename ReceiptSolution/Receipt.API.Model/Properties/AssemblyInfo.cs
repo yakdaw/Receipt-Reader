@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ReceiptAPI.Model.EF")]
+[assembly: AssemblyTitle("Receipt.API.Model")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ReceiptAPI.Model.EF")]
+[assembly: AssemblyProduct("Receipt.API.Model")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d0c2ad5e-7e2b-48af-b835-66a72c48dd77")]
+[assembly: Guid("bf00b3d6-2b92-4c9c-95bb-c60edb20c5c6")]
 
 // Version information for an assembly consists of the following four values:
 //
