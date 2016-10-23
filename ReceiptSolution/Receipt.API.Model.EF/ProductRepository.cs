@@ -29,5 +29,16 @@
 
             return domainProducts;
         }
+
+        public Product GetOneById(int id)
+        {
+            DatabaseModel.Products product;
+            using (var db = new ReceiptEntities())
+            {
+                product = db.Products.FirstOrDefault(c => c.Id == id);
+            }
+
+            return Mappers.ProductMapper.MapFrom(product);
+        }
     }
 }

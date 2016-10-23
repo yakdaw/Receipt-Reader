@@ -20,5 +20,18 @@
         {
             return this.repository.GetAll();
         }
+
+        [HttpGet]
+        [Route("api/products/{id}")]
+        public IHttpActionResult GetProductById(int id)
+        {
+            var product = this.repository.GetOneById(id);
+            if (product == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(product);
+        }
     }
 }
