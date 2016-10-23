@@ -15,6 +15,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("api/products/")]
         public IEnumerable<Product> GetAllProducts()
         {
@@ -22,6 +23,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("api/products/{id}")]
         public IHttpActionResult GetProductById(int id)
         {
