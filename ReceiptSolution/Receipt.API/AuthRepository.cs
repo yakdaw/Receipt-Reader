@@ -1,22 +1,21 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.Threading.Tasks;
-using Receipt.API.Model;
-using Receipt.API.Models;
-using System;
-
-namespace Receipt.API
+﻿namespace Receipt.API
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using System;
+    using System.Threading.Tasks;
+
+    using Receipt.API.Models;
+
     public class AuthRepository : IDisposable
     {
-        private AuthContext _ctx;
-
-        private UserManager<IdentityUser> _userManager;
+        private AuthContext context;
+        private UserManager<IdentityUser> userManager;
 
         public AuthRepository()
         {
-            _ctx = new AuthContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            context = new AuthContext();
+            userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
         }
 
         public async Task<IdentityResult> RegisterUser(User userModel)
@@ -26,23 +25,22 @@ namespace Receipt.API
                 UserName = userModel.UserName
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var result = await userManager.CreateAsync(user, userModel.Password);
 
             return result;
         }
 
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
-            IdentityUser user = await _userManager.FindAsync(userName, password);
+            IdentityUser user = await userManager.FindAsync(userName, password);
 
             return user;
         }
 
         public void Dispose()
         {
-            _ctx.Dispose();
-            _userManager.Dispose();
-
+            context.Dispose();
+            userManager.Dispose();
         }
     }
 }

@@ -1,37 +1,37 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security.OAuth;
-using Receipt.API;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
+﻿namespace Receipt.API
 {
-    public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.Owin.Security.OAuth;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
+    public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
-        context.Validated();
-    }
-
-    public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
-    {
-
-        context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
-        using (AuthRepository _repo = new AuthRepository())
+        public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
-
-            if (user == null)
-            {
-                context.SetError("invalid_grant", "The user name or password is incorrect.");
-                return;
-            }
+            context.Validated();
         }
 
-        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-        identity.AddClaim(new Claim("sub", context.UserName));
-        identity.AddClaim(new Claim("role", "user"));
+        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-        context.Validated(identity);
+            using (AuthRepository repository = new AuthRepository())
+            {
+                IdentityUser user = await repository.FindUser(context.UserName, context.Password);
 
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
+                }
+            }
+
+            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+            identity.AddClaim(new Claim("name", context.UserName));
+            identity.AddClaim(new Claim("role", "user"));
+
+            context.Validated(identity);
+        }
     }
 }
