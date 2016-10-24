@@ -10,13 +10,13 @@
 
     public class ProductRepository : IProductRepository
     {
-        public Collection<Product> GetAll()
+        public Collection<Product> GetAll(string userName)
         {
             List<DatabaseModel.Products> products;
 
             using (var db = new ReceiptEntities())
             {
-                products = db.Products.ToList();
+                products = db.Products.Where(x => x.User == userName).ToList();
             }
 
             var domainProducts = new Collection<Product>();
@@ -28,17 +28,6 @@
             }
 
             return domainProducts;
-        }
-
-        public Product GetOneById(int id)
-        {
-            DatabaseModel.Products product;
-            using (var db = new ReceiptEntities())
-            {
-                product = db.Products.FirstOrDefault(c => c.Id == id);
-            }
-
-            return Mappers.ProductMapper.MapFrom(product);
         }
     }
 }

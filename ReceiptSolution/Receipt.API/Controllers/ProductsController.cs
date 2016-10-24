@@ -24,21 +24,7 @@
         {
             string userName = this.authService.GetUserName(this.User);
 
-            return this.repository.GetAll();
-        }
-
-        [HttpGet]
-        [Authorize]
-        [Route("api/products/{id}")]
-        public IHttpActionResult GetProductById(int id)
-        {
-            var product = this.repository.GetOneById(id);
-            if (product == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.Ok(product);
+            return this.repository.GetAll(userName);
         }
     }
 }

@@ -5,7 +5,6 @@
 
     public interface IProductRepository
     {
-        Collection<Product> GetAll();
-        Product GetOneById(int id);
+        Collection<Product> GetAll(string userName);
     }
 }
