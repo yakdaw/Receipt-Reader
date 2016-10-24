@@ -21,5 +21,6 @@ namespace Receipt.API.Model.EF.DatabaseModel
         public string PurchasePlace { get; set; }
         public Nullable<System.DateTime> PurchaseDate { get; set; }
         public System.DateTime AddDate { get; set; }
+        public string User { get; set; }
     }
 }
