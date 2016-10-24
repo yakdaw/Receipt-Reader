@@ -1,7 +1,7 @@
 ﻿namespace Receipt.API.Controllers
 {
+    using Authentication;
     using Microsoft.AspNet.Identity;
-    using Models;
     using System.Threading.Tasks;
     using System.Web.Http;
 

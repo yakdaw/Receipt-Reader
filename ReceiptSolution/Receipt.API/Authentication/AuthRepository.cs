@@ -1,11 +1,9 @@
-﻿namespace Receipt.API
+﻿namespace Receipt.API.Authentication
 {
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Threading.Tasks;
-
-    using Receipt.API.Models;
 
     public class AuthRepository : IDisposable
     {

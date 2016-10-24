@@ -1,4 +1,4 @@
-﻿namespace Receipt.API.Models
+﻿namespace Receipt.API.Authentication
 {
     using System.ComponentModel.DataAnnotations;
 

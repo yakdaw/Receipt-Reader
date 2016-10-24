@@ -1,5 +1,6 @@
 ﻿namespace Receipt.API.Controllers
 {
+    using Authentication;
     using Domain.Entities;
     using Receipt.API.Model;
     using System.Collections.Generic;
@@ -8,10 +9,12 @@
     public class ProductsController : ApiController
     {
         private readonly IProductRepository repository;
+        private readonly AuthService authService; 
 
         public ProductsController(IProductRepository repository)
         {
             this.repository = repository;
+            this.authService = new AuthService();
         }
 
         [HttpGet]
@@ -19,6 +22,8 @@
         [Route("api/products/")]
         public IEnumerable<Product> GetAllProducts()
         {
+            string userName = this.authService.GetUserName(this.User);
+
             return this.repository.GetAll();
         }
 
