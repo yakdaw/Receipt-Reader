@@ -105,6 +105,7 @@
       <DependentUpon>Receipt.edmx</DependentUpon>
       <LastGenOutput>Receipt.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="DatabaseModel\Receipt.edmx.sql" />
     <Content Include="DatabaseModel\Receipt.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Receipt.edmx</DependentUpon>

@@ -14,8 +14,8 @@
           <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Category" Type="nvarchar" MaxLength="100" />
           <Property Name="PurchasePlace" Type="nvarchar" MaxLength="100" />
-          <Property Name="PurchaseDate" Type="datetime2" Precision="7" />
-          <Property Name="AddDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="PurchaseDate" Type="datetime" />
+          <Property Name="AddDate" Type="datetime" Nullable="false" />
           <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="ReceiptModelStoreContainer">
@@ -34,8 +34,8 @@
           <Property Name="Price" Nullable="false" Precision="18" Scale="2" Type="Decimal" />
           <Property Name="Category" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
           <Property Name="PurchasePlace" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
-          <Property Name="PurchaseDate" Precision="7" Type="DateTime" />
-          <Property Name="AddDate" Nullable="false" Precision="7" Type="DateTime" />
+          <Property Name="PurchaseDate" Precision="3" Type="DateTime" />
+          <Property Name="AddDate" Nullable="false" Precision="3" Type="DateTime" />
           <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="ReceiptEntities" annotation:LazyLoadingEnabled="true">
