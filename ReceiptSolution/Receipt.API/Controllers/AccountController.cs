@@ -2,6 +2,11 @@
 {
     using Authentication;
     using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.OAuth;
+    using System;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using System.Web.Http;
 
@@ -32,6 +37,39 @@
             {
                 return errorResult;
             }
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [Route("LostPassword/{userName}")]
+        public async Task<IHttpActionResult> LostPassword(string userName)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityUser user = await repository.FindUserByName(userName);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var tokenExpiration = TimeSpan.FromHours(6);
+            ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
+            identity.AddClaim(new Claim("name", userName));
+
+            var props = new AuthenticationProperties()
+            {
+                IssuedUtc = DateTime.UtcNow,
+                ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
+            };
+
+            var ticket = new AuthenticationTicket(identity, props);
+
+            var accessToken = Startup.OAuthServerOptions.AccessTokenFormat.Protect(ticket);
 
             return Ok();
         }

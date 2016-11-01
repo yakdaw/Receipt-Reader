@@ -10,6 +10,8 @@ namespace Receipt.API
 {
     public class Startup
     {
+        public static OAuthAuthorizationServerOptions OAuthServerOptions;
+
         public void Configuration(IAppBuilder app)
         {
             ConfigureOAuth(app);
@@ -21,7 +23,7 @@ namespace Receipt.API
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
