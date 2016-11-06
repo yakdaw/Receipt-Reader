@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Programowanie\Projects\Borzemski_Projekt_Zespolowy_MVC\ReceiptSolution\Receipt.API.Model.EF\DatabaseModel\Receipt.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\Repos\Borzemski_projekt_zespolowy\ReceiptSolution\Receipt.API.Model.EF\DatabaseModel\Receipt.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
