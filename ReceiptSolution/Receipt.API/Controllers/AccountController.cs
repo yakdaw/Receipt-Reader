@@ -16,12 +16,16 @@
     public class AccountController : ApiController
     {
         private AuthRepository repository = null;
+        private EmailService emailService = null;
         private ResponseService responseService = null;
+        private TokenService tokenService = null;
 
         public AccountController()
         {
             repository = new AuthRepository();
+            emailService = new EmailService();
             responseService = new ResponseService();
+            tokenService = new TokenService();
         }
 
         [AllowAnonymous]
@@ -62,19 +66,9 @@
                 return BadRequest();
             }
 
-            var tokenExpiration = TimeSpan.FromHours(6);
-            ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-            identity.AddClaim(new Claim("name", userName));
+            var accessToken = tokenService.CreateAccessToken(userName, 6);
 
-            var props = new AuthenticationProperties()
-            {
-                IssuedUtc = DateTime.UtcNow,
-                ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
-            };
-
-            var ticket = new AuthenticationTicket(identity, props);
-
-            var accessToken = Startup.OAuthServerOptions.AccessTokenFormat.Protect(ticket);
+            emailService.SendLostPasswordMail(user.Email, accessToken);
 
             return Ok();
         }
