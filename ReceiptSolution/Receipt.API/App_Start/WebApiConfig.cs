@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-
-using Autofac;
-using Receipt.API.Model.EF;
-using Receipt.API.Model;
-using Autofac.Integration.WebApi;
-using System.Reflection;
-using System.Net.Http.Headers;
-
-namespace Receipt.API
+﻿namespace Receipt.API
 {
+    using Autofac;
+    using Autofac.Integration.WebApi;
+    using Model;
+    using Model.EF;
+    using System.Net.Http.Headers;
+    using System.Reflection;
+    using System.Web.Http;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)

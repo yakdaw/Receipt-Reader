@@ -26,7 +26,7 @@
 
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(User user)
+        public async Task<IHttpActionResult> Register(RegisterModel user)
         {
             if (!ModelState.IsValid)
             {
@@ -36,23 +36,23 @@
 
             IdentityResult result = await repository.RegisterUser(user);
 
-            IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
+            if (!result.Succeeded)
             {
-                return errorResult;
+                var message = responseService.IdentityResultErrorsToString(result.Errors);
+                return BadRequest(message);
             }
 
             return Ok();
         }
 
         [AllowAnonymous]
-        [Route("LostPassword/{userName}")]
+        [Route("LostPassword")]
         public async Task<IHttpActionResult> LostPassword(string userName)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
             }
 
             IdentityUser user = await repository.FindUserByName(userName);

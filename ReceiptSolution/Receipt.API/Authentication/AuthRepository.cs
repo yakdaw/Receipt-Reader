@@ -17,7 +17,7 @@
             userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
         }
 
-        public async Task<IdentityResult> RegisterUser(User userModel)
+        public async Task<IdentityResult> RegisterUser(RegisterModel userModel)
         {
             IdentityUser user = new IdentityUser
             {
@@ -25,21 +25,18 @@
             };
 
             var result = await userManager.CreateAsync(user, userModel.Password);
-
             return result;
         }
 
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
             IdentityUser user = await userManager.FindAsync(userName, password);
-
             return user;
         }
 
         public async Task<IdentityUser> FindUserByName(string userName)
         {
             IdentityUser user = await userManager.FindByNameAsync(userName);
-
             return user;
         }
 

@@ -1,8 +1,7 @@
 ﻿namespace Receipt.API.Controllers
 {
-    using Authentication;
     using Domain.Entities;
-    using Receipt.API.Model;
+    using Model;
     using Services;
     using System.Collections.Generic;
     using System.Web.Http;
