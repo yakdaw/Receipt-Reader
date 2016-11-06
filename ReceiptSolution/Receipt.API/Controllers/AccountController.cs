@@ -5,6 +5,8 @@
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.OAuth;
+    using Models;
+    using Services;
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -14,10 +16,12 @@
     public class AccountController : ApiController
     {
         private AuthRepository repository = null;
+        private ResponseService responseService = null;
 
         public AccountController()
         {
             repository = new AuthRepository();
+            responseService = new ResponseService();
         }
 
         [AllowAnonymous]
@@ -26,7 +30,8 @@
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
             }
 
             IdentityResult result = await repository.RegisterUser(user);

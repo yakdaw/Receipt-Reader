@@ -3,6 +3,7 @@
     using Authentication;
     using Domain.Entities;
     using Receipt.API.Model;
+    using Services;
     using System.Collections.Generic;
     using System.Web.Http;
 

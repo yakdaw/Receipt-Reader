@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Models;
     using System;
     using System.Threading.Tasks;
 

@@ -1,4 +1,4 @@
-﻿namespace Receipt.API.Authentication
+﻿namespace Receipt.API.Services
 {
     using System.Collections.Generic;
     using System.Linq;
