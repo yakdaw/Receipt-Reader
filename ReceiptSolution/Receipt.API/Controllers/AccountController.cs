@@ -24,6 +24,13 @@
             tokenService = new TokenService();
         }
 
+        /// <summary>
+        /// Add new student
+        /// </summary>
+        /// <param name="student">Student Model</param>
+        /// <remarks>Insert new student</remarks>
+        /// <response code="400">Bad request</response>
+        /// <response code="500">Internal Server Error</response>
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterModel user)
