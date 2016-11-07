@@ -1,37 +1,34 @@
 ﻿namespace Receipt.API.Services
 {
-    using Microsoft.AspNet.Identity;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
+    using System.Net.Mail;
 
-    public class EmailService // : IIdentityMessageService
+    public class EmailService
     {
-        //public Task SendAsync(IdentityMessage message)
-        //{
-        //    const string apiKey = "key-ef7a2525b9a4141408b40cd4d4e438e0";
-        //    const string sandBox = "sandbox5c2ed57ac7b94f0ea5d372f3194b026c.mailgun.org";
-        //    byte[] apiKeyAuth = Encoding.ASCII.GetBytes($"api:{apiKey}");
-        //    var httpClient = new HttpClient { BaseAddress = new Uri("https://api.mailgun.net/v3/") };
-        //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-        //        Convert.ToBase64String(apiKeyAuth));
-
-        //    var form = new Dictionary<string, string>
-        //    {
-        //        ["from"] = "postmaster@sandbox5c2ed57ac7b94f0ea5d372f3194b026c.mailgun.org",
-        //        ["to"] = message.Destination,
-        //        ["subject"] = message.Subject,
-        //        ["text"] = message.Body
-        //    };
-
-        //    HttpResponseMessage response =
-        //        httpClient.PostAsync(sandBox + "/messages", new FormUrlEncodedContent(form)).Result;
-        //    return Task.FromResult((int)response.StatusCode);
-        //}
-        internal void SendLostPasswordMail(string email, string accessToken)
+        public Exception SendLostPasswordMail(string email, string accessToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress("receiptreader.service@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = "ReceiptReader password reset";
+                mail.Body = "Your access token to reset the password: " + accessToken;
+
+                smtpServer.Port = 587;
+                smtpServer.Credentials = new System.Net.NetworkCredential("receiptreader.service@gmail.com", "jackamwoj");
+                smtpServer.EnableSsl = true;
+
+                smtpServer.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+
+            return null;
         }
     }
 }

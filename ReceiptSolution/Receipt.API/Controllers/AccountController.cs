@@ -64,7 +64,7 @@
 
             var passwordResetToken = await repository.GeneratePasswordResetToken(user);
 
-            //emailService.SendLostPasswordMail(user.Email, accessToken);
+            emailService.SendLostPasswordMail(user.Email, passwordResetToken);
 
             return Ok(passwordResetToken);
         }
