@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity.Owin;
     using Models;
     using System;
     using System.Threading.Tasks;
@@ -15,6 +16,8 @@
         {
             context = new AuthContext();
             userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
+
+            userManager.UserTokenProvider = new DataProtectorTokenProvider<IdentityUser>(Startup.dataProtectionProvider.Create("UserToken"));
         }
 
         public async Task<IdentityResult> RegisterUser(RegisterModel userModel)
@@ -38,6 +41,18 @@
         {
             IdentityUser user = await userManager.FindByNameAsync(userName);
             return user;
+        }
+
+        public async Task<string> GeneratePasswordResetToken(IdentityUser user)
+        {
+            var token = await userManager.GeneratePasswordResetTokenAsync(user.Id);
+            return token;
+        }
+
+        public async Task<IdentityResult> ResetPassword(string id, string token, string password)
+        {
+            var result = await userManager.ResetPasswordAsync(id, token, password);
+            return result;
         }
 
         public void Dispose()

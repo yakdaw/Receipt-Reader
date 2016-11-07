@@ -3,12 +3,8 @@
     using Authentication;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.OAuth;
     using Models;
     using Services;
-    using System;
-    using System.Security.Claims;
     using System.Threading.Tasks;
     using System.Web.Http;
 
@@ -66,9 +62,37 @@
                 return BadRequest();
             }
 
-            var accessToken = tokenService.CreateAccessToken(userName, 6);
+            var passwordResetToken = await repository.GeneratePasswordResetToken(user);
 
-            emailService.SendLostPasswordMail(user.Email, accessToken);
+            //emailService.SendLostPasswordMail(user.Email, accessToken);
+
+            return Ok(passwordResetToken);
+        }
+
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword(PasswordRecoveryModel passwordRecoveryModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
+            }
+
+            IdentityUser user = await repository.FindUserByName(passwordRecoveryModel.UserName);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var result = await repository.ResetPassword(user.Id, passwordRecoveryModel.token, passwordRecoveryModel.Password);
+
+            if (!result.Succeeded)
+            {
+                var message = responseService.IdentityResultErrorsToString(result.Errors);
+                return BadRequest(message);
+            }
 
             return Ok();
         }

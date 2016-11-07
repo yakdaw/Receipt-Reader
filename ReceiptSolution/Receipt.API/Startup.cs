@@ -1,7 +1,8 @@
 ﻿using Microsoft.Owin;
+using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using Receipt.API.Authentication;
+using Receipt.API.Providers;
 using System;
 using System.Web.Http;
 
@@ -11,10 +12,12 @@ namespace Receipt.API
     public class Startup
     {
         public static OAuthAuthorizationServerOptions OAuthServerOptions;
+        public static IDataProtectionProvider dataProtectionProvider;
 
         public void Configuration(IAppBuilder app)
         {
             ConfigureOAuth(app);
+            ConfigureDataProtection(app);
             HttpConfiguration config = new HttpConfiguration();
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
@@ -34,6 +37,11 @@ namespace Receipt.API
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+        }
+
+        public void ConfigureDataProtection(IAppBuilder app)
+        {
+            dataProtectionProvider = app.GetDataProtectionProvider();
         }
     }
 }

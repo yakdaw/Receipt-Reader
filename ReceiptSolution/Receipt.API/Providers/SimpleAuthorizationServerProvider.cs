@@ -1,5 +1,6 @@
-﻿namespace Receipt.API.Authentication
+﻿namespace Receipt.API.Providers
 {
+    using Authentication;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security.OAuth;
     using System.Security.Claims;
