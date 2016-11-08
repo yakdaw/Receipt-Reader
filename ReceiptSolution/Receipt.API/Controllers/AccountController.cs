@@ -63,7 +63,7 @@
         /// <response code="400">Invalid data model. / User not found.</response>
         [AllowAnonymous]
         [Route("lostPassword")]
-        public async Task<IHttpActionResult> LostPassword(string userName)
+        public async Task<IHttpActionResult> LostPassword(LostPasswordModel lostPasswordModel)
         {
             if (!ModelState.IsValid)
             {
@@ -71,7 +71,7 @@
                 return BadRequest(message);
             }
 
-            IdentityUser user = await repository.FindUserByName(userName);
+            IdentityUser user = await repository.FindUserByName(lostPasswordModel.UserName);
 
             if (user == null)
             {
