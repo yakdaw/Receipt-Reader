@@ -16,6 +16,9 @@
         private ResponseService responseService = null;
         private TokenService tokenService = null;
 
+        /// <summary>
+        /// Account based operations
+        /// </summary>
         public AccountController()
         {
             repository = new AuthRepository();
@@ -25,14 +28,13 @@
         }
 
         /// <summary>
-        /// Add new student
+        /// Register new user
         /// </summary>
-        /// <param name="student">Student Model</param>
-        /// <remarks>Insert new student</remarks>
-        /// <response code="400">Bad request</response>
-        /// <response code="500">Internal Server Error</response>
+        /// <param name="user">User desired name and password.</param>
+        /// <response code="200">User successfully registered in database.</response>
+        /// <response code="400">Invalid data model. / User with that name is already in database.</response>
         [AllowAnonymous]
-        [Route("Register")]
+        [Route("register")]
         public async Task<IHttpActionResult> Register(RegisterModel user)
         {
             if (!ModelState.IsValid)
@@ -52,8 +54,15 @@
             return Ok();
         }
 
+        /// <summary>
+        /// Send reset token
+        /// </summary>
+        /// <param name="userName">User name to reset its password.</param>
+        /// <response code="200">Token successfully sent as response and to user's 
+        /// associated mail. Expires after 3 hours.</response>
+        /// <response code="400">Invalid data model. / User not found.</response>
         [AllowAnonymous]
-        [Route("LostPassword")]
+        [Route("lostPassword")]
         public async Task<IHttpActionResult> LostPassword(string userName)
         {
             if (!ModelState.IsValid)
@@ -66,7 +75,7 @@
 
             if (user == null)
             {
-                return BadRequest();
+                return BadRequest("User not found.");
             }
 
             var passwordResetToken = await repository.GeneratePasswordResetToken(user);
@@ -76,8 +85,17 @@
             return Ok(passwordResetToken);
         }
 
+        /// <summary>
+        /// Reset user's password
+        /// </summary>
+        /// <param name="passwordRecoveryModel">
+        /// Model that contains user's name, desired password with its confirmation (same password) 
+        /// and reset token from LostPassword method.
+        /// </param>
+        /// <response code="200">User password was successfully reset.</response>
+        /// <response code="500">Invalid data model. / User not found. / Reset token denied.</response>
         [AllowAnonymous]
-        [Route("ResetPassword")]
+        [Route("resetPassword")]
         public async Task<IHttpActionResult> ResetPassword(PasswordRecoveryModel passwordRecoveryModel)
         {
             if (!ModelState.IsValid)
@@ -90,10 +108,10 @@
 
             if (user == null)
             {
-                return BadRequest();
+                return BadRequest("User not found.");
             }
 
-            var result = await repository.ResetPassword(user.Id, passwordRecoveryModel.token, passwordRecoveryModel.Password);
+            var result = await repository.ResetPassword(user.Id, passwordRecoveryModel.Token, passwordRecoveryModel.Password);
 
             if (!result.Succeeded)
             {

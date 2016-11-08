@@ -17,7 +17,10 @@
             context = new AuthContext();
             userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
 
-            userManager.UserTokenProvider = new DataProtectorTokenProvider<IdentityUser>(Startup.dataProtectionProvider.Create("UserToken"));
+            userManager.UserTokenProvider = new DataProtectorTokenProvider<IdentityUser>(Startup.dataProtectionProvider.Create("UserToken"))
+            {
+                TokenLifespan = TimeSpan.FromHours(3)
+            };
         }
 
         public async Task<IdentityResult> RegisterUser(RegisterModel userModel)
