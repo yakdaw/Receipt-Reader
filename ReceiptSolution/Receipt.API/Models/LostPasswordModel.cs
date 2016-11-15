@@ -5,7 +5,7 @@ namespace Receipt.API.Models
     public class LostPasswordModel
     {
         [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
+        [Display(Name = "User name or email")]
+        public string LoginInfo { get; set; }
     }
 }

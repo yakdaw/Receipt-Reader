@@ -30,9 +30,9 @@
         /// <summary>
         /// Register new user
         /// </summary>
-        /// <param name="user">User desired name and password.</param>
+        /// <param name="user">User desired name, e-mail and password.</param>
         /// <response code="200">User successfully registered in database.</response>
-        /// <response code="400">Invalid data model. / User with that name is already in database.</response>
+        /// <response code="400">Invalid data model. / User with that name or e-mail is already in database.</response>
         [AllowAnonymous]
         [Route("register")]
         public async Task<IHttpActionResult> Register(RegisterModel user)
@@ -57,7 +57,7 @@
         /// <summary>
         /// Send reset token
         /// </summary>
-        /// <param name="userName">User name to reset its password.</param>
+        /// <param name="lostPasswordModel">User name or e-mail to reset his password.</param>
         /// <response code="200">Token successfully sent as response and to user's 
         /// associated mail. Expires after 3 hours.</response>
         /// <response code="400">Invalid data model. / User not found.</response>
@@ -71,7 +71,7 @@
                 return BadRequest(message);
             }
 
-            IdentityUser user = await repository.FindUserByName(lostPasswordModel.UserName);
+            IdentityUser user = await repository.FindUserByLoginInfo(lostPasswordModel.LoginInfo);
 
             if (user == null)
             {
@@ -82,18 +82,18 @@
 
             emailService.SendLostPasswordMail(user.Email, passwordResetToken);
 
-            return Ok(passwordResetToken);
+            return Ok();
         }
 
         /// <summary>
         /// Reset user's password
         /// </summary>
         /// <param name="passwordRecoveryModel">
-        /// Model that contains user's name, desired password with its confirmation (same password) 
+        /// Model that contains user's e-mail, desired password with its confirmation (same password) 
         /// and reset token from LostPassword method.
         /// </param>
         /// <response code="200">User password was successfully reset.</response>
-        /// <response code="500">Invalid data model. / User not found. / Reset token denied.</response>
+        /// <response code="400">Invalid data model. / User not found. / Reset token denied.</response>
         [AllowAnonymous]
         [Route("resetPassword")]
         public async Task<IHttpActionResult> ResetPassword(PasswordRecoveryModel passwordRecoveryModel)
@@ -104,7 +104,7 @@
                 return BadRequest(message);
             }
 
-            IdentityUser user = await repository.FindUserByName(passwordRecoveryModel.UserName);
+            IdentityUser user = await repository.FindUserByEmail(passwordRecoveryModel.Email);
 
             if (user == null)
             {
