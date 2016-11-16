@@ -72,23 +72,10 @@
     <Compile Include="DatabaseModel\Product.cs">
       <DependentUpon>ReceiptReaderDatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseModel\Products.cs">
-      <DependentUpon>Receipt.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DatabaseModel\Receipt.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Receipt.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="DatabaseModel\Receipt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReceiptReaderDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DatabaseModel\Receipt.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Receipt.edmx</DependentUpon>
     </Compile>
     <Compile Include="DatabaseModel\ReceiptReaderDatabaseModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -121,17 +108,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EntityDeploy Include="DatabaseModel\Receipt.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Receipt.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="DatabaseModel\Receipt.edmx.diagram">
-      <DependentUpon>Receipt.edmx</DependentUpon>
     </None>
     <EntityDeploy Include="DatabaseModel\ReceiptReaderDatabaseModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -143,17 +121,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DatabaseModel\Receipt.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Receipt.edmx</DependentUpon>
-      <LastGenOutput>Receipt.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DatabaseModel\Receipt.edmx.sql" />
-    <Content Include="DatabaseModel\Receipt.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Receipt.edmx</DependentUpon>
-      <LastGenOutput>Receipt.cs</LastGenOutput>
-    </Content>
     <Content Include="DatabaseModel\ReceiptReaderDatabaseModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ReceiptReaderDatabaseModel.edmx</DependentUpon>

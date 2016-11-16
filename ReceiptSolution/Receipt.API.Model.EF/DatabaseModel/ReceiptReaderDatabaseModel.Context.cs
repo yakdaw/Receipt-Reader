@@ -16,13 +16,13 @@ namespace Receipt.API.Model.EF.DatabaseModel
     public partial class Entities : DbContext
     {
         public Entities()
-            : base("name=Entities")
+            : base("name=ReceiptReaderContext")
         {
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            //throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }

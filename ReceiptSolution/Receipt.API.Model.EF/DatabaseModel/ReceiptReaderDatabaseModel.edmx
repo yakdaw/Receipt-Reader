@@ -4,44 +4,44 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ReceiptDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="ReceiptDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
   <EntityContainer Name="ReceiptDatabaseModelStoreContainer">
-    <EntitySet Name="C__MigrationHistory" EntityType="ReceiptDatabaseModel.Store.C__MigrationHistory" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AspNetRoles" EntityType="ReceiptDatabaseModel.Store.AspNetRoles" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AspNetUserClaims" EntityType="ReceiptDatabaseModel.Store.AspNetUserClaims" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AspNetUserLogins" EntityType="ReceiptDatabaseModel.Store.AspNetUserLogins" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AspNetUsers" EntityType="ReceiptDatabaseModel.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Product" EntityType="ReceiptDatabaseModel.Store.Product" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Receipt" EntityType="ReceiptDatabaseModel.Store.Receipt" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CustomizedProduct" EntityType="ReceiptDatabaseModel.Store.CustomizedProduct" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AspNetUserRoles" EntityType="ReceiptDatabaseModel.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="C__MigrationHistory" EntityType="ReceiptDatabaseModel.Store.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="ReceiptDatabaseModel.Store.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="ReceiptDatabaseModel.Store.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="ReceiptDatabaseModel.Store.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="ReceiptDatabaseModel.Store.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="ReceiptDatabaseModel.Store.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receipt" EntityType="ReceiptDatabaseModel.Store.Receipt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomizedProduct" EntityType="ReceiptDatabaseModel.Store.CustomizedProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="ReceiptDatabaseModel.Store.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ReceiptDatabaseModel.Store.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+      <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+      <End EntitySet="AspNetUserClaims" Role="AspNetUserClaims" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="ReceiptDatabaseModel.Store.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+      <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+      <End EntitySet="AspNetUserLogins" Role="AspNetUserLogins" />
     </AssociationSet>
     <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="ReceiptDatabaseModel.Store.FK_AspNetUserRoles_AspNetRoles">
-      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+      <End EntitySet="AspNetRoles" Role="AspNetRoles" />
+      <End EntitySet="AspNetUserRoles" Role="AspNetUserRoles" />
     </AssociationSet>
     <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers" Association="ReceiptDatabaseModel.Store.FK_AspNetUserRoles_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+      <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+      <End EntitySet="AspNetUserRoles" Role="AspNetUserRoles" />
     </AssociationSet>
     <AssociationSet Name="ReceiptAspNetUsers" Association="ReceiptDatabaseModel.Store.ReceiptAspNetUsers">
-      <End Role="Receipt" EntitySet="Receipt" />
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End EntitySet="Receipt" Role="Receipt" />
+      <End EntitySet="AspNetUsers" Role="AspNetUsers" />
     </AssociationSet>
     <AssociationSet Name="ReceiptProduct" Association="ReceiptDatabaseModel.Store.ReceiptProduct">
-      <End Role="Receipt" EntitySet="Receipt" />
-      <End Role="Product" EntitySet="Product" />
+      <End EntitySet="Receipt" Role="Receipt" />
+      <End EntitySet="Product" Role="Product" />
     </AssociationSet>
     <AssociationSet Name="AspNetUsersCustomizedProduct" Association="ReceiptDatabaseModel.Store.AspNetUsersCustomizedProduct">
-      <End Role="CustomizedProduct" EntitySet="CustomizedProduct" />
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End EntitySet="CustomizedProduct" Role="CustomizedProduct" />
+      <End EntitySet="AspNetUsers" Role="AspNetUsers" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
@@ -49,26 +49,26 @@
       <PropertyRef Name="MigrationId" />
       <PropertyRef Name="ContextKey" />
     </Key>
-    <Property Name="MigrationId" Type="nvarchar" Nullable="false" MaxLength="150" />
-    <Property Name="ContextKey" Type="nvarchar" Nullable="false" MaxLength="300" />
-    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-    <Property Name="ProductVersion" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="MigrationId" Nullable="false" MaxLength="150" Type="nvarchar" />
+    <Property Name="ContextKey" Nullable="false" MaxLength="300" Type="nvarchar" />
+    <Property Name="Model" Nullable="false" Type="varbinary(max)" />
+    <Property Name="ProductVersion" Nullable="false" MaxLength="32" Type="nvarchar" />
   </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="Id" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="Name" Nullable="false" MaxLength="256" Type="nvarchar" />
   </EntityType>
   <EntityType Name="AspNetUserClaims">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="ClaimType" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="ClaimValue" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="ClaimType" Nullable="true" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Nullable="true" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="AspNetUserLogins">
     <Key>
@@ -76,72 +76,72 @@
       <PropertyRef Name="ProviderKey" />
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="LoginProvider" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="ProviderKey" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="LoginProvider" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="ProviderKey" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
   </EntityType>
   <EntityType Name="AspNetUsers">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="SecurityStamp" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-    <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
-    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="Id" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="Email" Nullable="true" MaxLength="256" Type="nvarchar" />
+    <Property Name="EmailConfirmed" Nullable="false" Type="bit" />
+    <Property Name="PasswordHash" Nullable="true" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Nullable="true" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Nullable="true" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Nullable="false" Type="bit" />
+    <Property Name="TwoFactorEnabled" Nullable="false" Type="bit" />
+    <Property Name="LockoutEndDateUtc" Nullable="true" Type="datetime" />
+    <Property Name="LockoutEnabled" Nullable="false" Type="bit" />
+    <Property Name="AccessFailedCount" Nullable="false" Type="int" />
+    <Property Name="UserName" Nullable="false" MaxLength="256" Type="nvarchar" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="ReceiptId" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Price" Type="decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="Quantity" Type="int" Nullable="false" />
-    <Property Name="Category" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="ReceiptId" Nullable="false" Type="int" />
+    <Property Name="Name" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="Price" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Quantity" Nullable="false" Type="int" />
+    <Property Name="Category" Nullable="true" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Receipt">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="AddDate" Type="datetime" Nullable="false" />
-    <Property Name="PurchaseDate" Type="datetime" Nullable="true" />
-    <Property Name="PurchasePlace" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="ControlSum" Type="decimal" Nullable="true" Precision="18" Scale="2" />
-    <Property Name="Image" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="AddDate" Nullable="false" Type="datetime" />
+    <Property Name="PurchaseDate" Nullable="true" Type="datetime" />
+    <Property Name="PurchasePlace" Nullable="true" Type="nvarchar(max)" />
+    <Property Name="ControlSum" Nullable="true" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Image" Nullable="true" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="CustomizedProduct">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PurchasePlace" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="Name" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="PurchasePlace" Nullable="true" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="AspNetUserRoles">
     <Key>
       <PropertyRef Name="AspNetRoles_Id" />
       <PropertyRef Name="AspNetUsers_Id" />
     </Key>
-    <Property Name="AspNetRoles_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="AspNetUsers_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="AspNetRoles_Id" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="AspNetUsers_Id" Nullable="false" MaxLength="128" Type="nvarchar" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1">
+    <End Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1" Role="AspNetUsers">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="AspNetUserClaims" Type="ReceiptDatabaseModel.Store.AspNetUserClaims" Multiplicity="*" />
+    <End Type="ReceiptDatabaseModel.Store.AspNetUserClaims" Multiplicity="*" Role="AspNetUserClaims" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
@@ -152,10 +152,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1">
+    <End Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1" Role="AspNetUsers">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="AspNetUserLogins" Type="ReceiptDatabaseModel.Store.AspNetUserLogins" Multiplicity="*" />
+    <End Type="ReceiptDatabaseModel.Store.AspNetUserLogins" Multiplicity="*" Role="AspNetUserLogins" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
@@ -166,8 +166,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ReceiptAspNetUsers">
-    <End Role="Receipt" Type="ReceiptDatabaseModel.Store.Receipt" Multiplicity="*" />
-    <End Role="AspNetUsers" Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Type="ReceiptDatabaseModel.Store.Receipt" Multiplicity="*" Role="Receipt" />
+    <End Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
@@ -178,8 +178,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ReceiptProduct">
-    <End Role="Receipt" Type="ReceiptDatabaseModel.Store.Receipt" Multiplicity="1" />
-    <End Role="Product" Type="ReceiptDatabaseModel.Store.Product" Multiplicity="*" />
+    <End Type="ReceiptDatabaseModel.Store.Receipt" Multiplicity="1" Role="Receipt" />
+    <End Type="ReceiptDatabaseModel.Store.Product" Multiplicity="*" Role="Product" />
     <ReferentialConstraint>
       <Principal Role="Receipt">
         <PropertyRef Name="Id" />
@@ -190,8 +190,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="AspNetUsersCustomizedProduct">
-    <End Role="CustomizedProduct" Type="ReceiptDatabaseModel.Store.CustomizedProduct" Multiplicity="*" />
-    <End Role="AspNetUsers" Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Type="ReceiptDatabaseModel.Store.CustomizedProduct" Multiplicity="*" Role="CustomizedProduct" />
+    <End Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
@@ -202,8 +202,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_AspNetUserRoles_AspNetRoles">
-    <End Role="AspNetRoles" Type="ReceiptDatabaseModel.Store.AspNetRoles" Multiplicity="1" />
-    <End Role="AspNetUserRoles" Type="ReceiptDatabaseModel.Store.AspNetUserRoles" Multiplicity="*" />
+    <End Type="ReceiptDatabaseModel.Store.AspNetRoles" Multiplicity="1" Role="AspNetRoles" />
+    <End Type="ReceiptDatabaseModel.Store.AspNetUserRoles" Multiplicity="*" Role="AspNetUserRoles" />
     <ReferentialConstraint>
       <Principal Role="AspNetRoles">
         <PropertyRef Name="Id" />
@@ -214,8 +214,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_AspNetUserRoles_AspNetUsers">
-    <End Role="AspNetUserRoles" Type="ReceiptDatabaseModel.Store.AspNetUserRoles" Multiplicity="*" />
-    <End Role="AspNetUsers" Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1" />
+    <End Type="ReceiptDatabaseModel.Store.AspNetUserRoles" Multiplicity="*" Role="AspNetUserRoles" />
+    <End Type="ReceiptDatabaseModel.Store.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />

@@ -5,6 +5,6 @@
 
     public interface IProductRepository
     {
-        Collection<Product> GetAll(string userName);
+        Collection<Product> GetAllUserProducts(string userId);
     }
 }

@@ -1,29 +1,35 @@
 ﻿namespace Receipt.API.Model.EF
 {
-    using Receipt.Domain.Entities;
-    using Receipt.API.Model;
-    using System;
-    using System.Collections.ObjectModel;
+    using Domain.Entities;
+    using Mappers;
+    using Model;
     using System.Collections.Generic;
-    using DatabaseModel;
+    using System.Collections.ObjectModel;
     using System.Linq;
 
     public class ProductRepository : IProductRepository
     {
-        public Collection<Domain.Entities.Product> GetAll(string userName)
-        {
-            List<DatabaseModel.Products> products;
+        private ProductMapper productMapper = null;
 
-            using (var db = new ReceiptEntities())
+        public ProductRepository()
+        {
+            productMapper = new ProductMapper();
+        }
+
+        public Collection<Product> GetAllUserProducts(string userId)
+        {
+            List<DatabaseModel.Product> products;
+
+            using (var db = new DatabaseModel.Entities())
             {
-                products = db.Products.Where(x => x.User == userName).ToList();
+                products = db.Product.Where(x => x.Receipt.UserId == userId).ToList();
             }
 
-            var domainProducts = new Collection<Domain.Entities.Product>();
+            var domainProducts = new Collection<Product>();
 
             foreach (var product in products)
             {
-                var domainProduct = Mappers.ProductMapper.MapFrom(product);
+                var domainProduct = productMapper.MapFromDatabase(product);
                 domainProducts.Add(domainProduct);
             }
 

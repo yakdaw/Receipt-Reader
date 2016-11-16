@@ -4,6 +4,8 @@
     using Model;
     using Services;
     using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
     using System.Web.Http;
 
     public class ProductsController : ApiController
@@ -19,12 +21,21 @@
 
         [HttpGet]
         [Authorize]
-        [Route("api/products/")]
-        public IEnumerable<Product> GetAllProducts()
+        [Route("api/{userName}/products")]
+        public IEnumerable<Product> GetAllProducts(string userName)
         {
-            string userName = this.authService.GetUserName(this.User);
+            string tokenName = this.authService.GetUserName(this.User);
 
-            return this.repository.GetAll(userName);
+            if (!tokenName.Equals(userName))
+            {
+                var msg = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                { ReasonPhrase = "Invalid query for user " + userName + "." };
+                throw new HttpResponseException(msg);
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            return this.repository.GetAllUserProducts(userId);
         }
     }
 }
