@@ -12,24 +12,13 @@ namespace Receipt.API.Model.EF.DatabaseModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Receipt
+    public partial class CustomizedProduct
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Receipt()
-        {
-            this.Products = new HashSet<Product>();
-        }
-    
         public int Id { get; set; }
         public string UserId { get; set; }
-        public System.DateTime AddDate { get; set; }
-        public Nullable<System.DateTime> PurchaseDate { get; set; }
+        public string Name { get; set; }
         public string PurchasePlace { get; set; }
-        public Nullable<decimal> ControlSum { get; set; }
-        public byte[] Image { get; set; }
     
         public virtual AspNetUsers AspNetUser { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
     }
 }

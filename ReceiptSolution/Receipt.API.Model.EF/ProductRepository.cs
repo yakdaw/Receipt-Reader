@@ -10,7 +10,7 @@
 
     public class ProductRepository : IProductRepository
     {
-        public Collection<Product> GetAll(string userName)
+        public Collection<Domain.Entities.Product> GetAll(string userName)
         {
             List<DatabaseModel.Products> products;
 
@@ -19,7 +19,7 @@
                 products = db.Products.Where(x => x.User == userName).ToList();
             }
 
-            var domainProducts = new Collection<Product>();
+            var domainProducts = new Collection<Domain.Entities.Product>();
 
             foreach (var product in products)
             {
