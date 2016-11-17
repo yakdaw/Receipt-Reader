@@ -17,6 +17,8 @@
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<ProductRepository>().As<IProductRepository>()
                 .InstancePerRequest();
+            builder.RegisterType<ReceiptRepository>().As<IReceiptRepository>()
+                .InstancePerRequest();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
