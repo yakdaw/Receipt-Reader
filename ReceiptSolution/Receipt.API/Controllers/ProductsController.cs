@@ -7,22 +7,32 @@
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
-    using System;
     using System.Web.Http.Description;
 
+    [Authorize]
     public class ProductsController : ApiController
     {
         //private readonly IProductRepository repository;
-        private readonly AuthService authService; 
+        private readonly AuthService authService;
 
+        /// <summary>
+        /// Product based operations
+        /// </summary>
         public ProductsController(IProductRepository repository)
         {
             //this.repository = repository;
             this.authService = new AuthService();
         }
 
+
+        /// <summary>
+        /// Get all user products
+        /// </summary>
+        /// <param name="request">Request with bearer token authentication for specified user</param>
+        /// <param name="userName">Name of user</param>
+        /// <response code="200">User products successfully sent.</response>
+        /// <response code="400">No authentication token. / Wrong user name in query.</response>
         [HttpGet]
-        [Authorize]
         [ResponseType(typeof(IEnumerable<Product>))]
         [Route("api/{userName}/products")]
         public HttpResponseMessage GetAllProducts(HttpRequestMessage request, string userName)
@@ -41,8 +51,15 @@
             //return this.repository.GetAllUserProducts(userId);
         }
 
+        /// <summary>
+        /// Get specified user product
+        /// </summary>
+        /// <param name="request">Request with bearer token authentication for specified user</param>
+        /// <param name="userName">Name of user</param>
+        /// <param name="productId">Product ID</param>
+        /// <response code="200">User product successfully sent.</response>
+        /// <response code="400">No authentication token. / Wrong user name in query.</response>
         [HttpGet]
-        [Authorize]
         [ResponseType(typeof(Product))]
         [Route("api/{userName}/products/{productId}")]
         public HttpResponseMessage GetAllProducts(HttpRequestMessage request, string userName, int productId)
@@ -70,7 +87,8 @@
                 Name = "Serek",
                 Price = 3.99m,
                 Quantity = 3,
-                Category = "Spożywcze"
+                Category = "Spożywcze",
+                Url = "http://receiptsolution.azurewebsites.net/api/wojtek/products/1"
             };
         }
 
@@ -85,7 +103,8 @@
                     Name = "Serek",
                     Price = 3.99m,
                     Quantity = 3,
-                    Category = "Spożywcze"
+                    Category = "Spożywcze",
+                    Url = "http://receiptsolution.azurewebsites.net/api/wojtek/products/1"
                 },
                 new Product()
                 {
@@ -94,7 +113,8 @@
                     Name = "Wino",
                     Price = 19.99m,
                     Quantity = 1,
-                    Category = "Alkohol"
+                    Category = "Alkohol",
+                    Url = "http://receiptsolution.azurewebsites.net/api/wojtek/products/2"
                 }
             };
 

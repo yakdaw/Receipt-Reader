@@ -1,6 +1,6 @@
 ﻿namespace Receipt.API.Model.EF.Mappers
 {
-    using Receipt.Domain.Entities;
+    using Domain.Entities;
 
     public class ProductMapper
     {
