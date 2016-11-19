@@ -5,7 +5,7 @@
     public class AuthContext : IdentityDbContext<IdentityUser>
     {
         public AuthContext()
-            : base("ReceiptReaderContext")
+            : base("ReceiptReaderIdentityContext")
         {
 
         }

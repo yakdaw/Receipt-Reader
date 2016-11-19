@@ -19,6 +19,6 @@ namespace Receipt.API.Model.EF.DatabaseModel
         public string Name { get; set; }
         public string PurchasePlace { get; set; }
     
-        public virtual AspNetUsers AspNetUser { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

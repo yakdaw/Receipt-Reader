@@ -16,8 +16,12 @@
             domainReceipt.UserId = databaseReceipt.UserId;
             domainReceipt.AddDate = databaseReceipt.AddDate;
             domainReceipt.PurchaseDate = databaseReceipt.PurchaseDate;
+            databaseReceipt.PurchasePlace = databaseReceipt.PurchasePlace;
             domainReceipt.ControlSum = databaseReceipt.ControlSum;
             domainReceipt.Image = databaseReceipt.Image;
+            
+            // Product list
+            // Url
 
             return domainReceipt;
         }
@@ -34,6 +38,7 @@
             databaseReceipt.UserId = domainReceipt.UserId;
             databaseReceipt.AddDate = domainReceipt.AddDate;
             databaseReceipt.PurchaseDate = domainReceipt.PurchaseDate;
+            databaseReceipt.PurchasePlace = domainReceipt.PurchasePlace;
             databaseReceipt.ControlSum = domainReceipt.ControlSum;
             databaseReceipt.Image = domainReceipt.Image;
 

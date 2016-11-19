@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System;
 
     public class ProductRepository : IProductRepository
     {
@@ -20,7 +21,7 @@
         {
             List<DatabaseModel.Product> products;
 
-            using (var db = new DatabaseModel.Entities())
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
                 products = db.Product.Where(x => x.Receipt.UserId == userId).ToList();
             }
@@ -34,6 +35,11 @@
             }
 
             return domainProducts;
+        }
+
+        public Product GetUserProductById(string userId, int productId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

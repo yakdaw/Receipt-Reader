@@ -10,5 +10,10 @@
         {
             throw new NotImplementedException();
         }
+
+        public Receipt GetUserReceiptById(string userId, int receiptId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

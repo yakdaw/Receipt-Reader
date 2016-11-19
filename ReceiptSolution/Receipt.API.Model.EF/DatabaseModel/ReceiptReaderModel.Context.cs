@@ -13,16 +13,16 @@ namespace Receipt.API.Model.EF.DatabaseModel
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class ReceiptReaderDatabaseContext : DbContext
     {
-        public Entities()
-            : base("name=ReceiptReaderContext")
+        public ReceiptReaderDatabaseContext()
+            : base("name=ReceiptReaderDatabaseContext")
         {
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //throw new UnintentionalCodeFirstException();
+            throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
@@ -30,8 +30,8 @@ namespace Receipt.API.Model.EF.DatabaseModel
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<CustomizedProduct> CustomizedProduct { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Receipt> Receipt { get; set; }
-        public virtual DbSet<CustomizedProduct> CustomizedProduct { get; set; }
     }
 }
