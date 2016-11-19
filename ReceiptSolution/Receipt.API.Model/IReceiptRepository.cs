@@ -7,5 +7,6 @@
     {
         Collection<Receipt> GetAllUserReceipts(string userId);
         Receipt GetUserReceiptById(string userId, int receiptId);
+        byte[] GetUserReceiptImage(string userId, int receiptId);
     }
 }

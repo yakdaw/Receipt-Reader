@@ -19,9 +19,6 @@
             databaseReceipt.PurchasePlace = databaseReceipt.PurchasePlace;
             domainReceipt.ControlSum = databaseReceipt.ControlSum;
             domainReceipt.Image = databaseReceipt.Image;
-            
-            // Product list
-            // Url
 
             return domainReceipt;
         }
@@ -41,6 +38,8 @@
             databaseReceipt.PurchasePlace = domainReceipt.PurchasePlace;
             databaseReceipt.ControlSum = domainReceipt.ControlSum;
             databaseReceipt.Image = domainReceipt.Image;
+
+            // domainReceipt.Products - left for further use
 
             return databaseReceipt;
         }

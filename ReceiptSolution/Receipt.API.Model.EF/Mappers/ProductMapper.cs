@@ -19,8 +19,6 @@
             domainProduct.Quantity = databaseProduct.Quantity;
             domainProduct.Category = databaseProduct.Category;
 
-            // Url
-
             return domainProduct;
         }
 

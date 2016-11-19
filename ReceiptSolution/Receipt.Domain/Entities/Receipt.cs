@@ -14,17 +14,5 @@
         public byte[] Image { get; set; }
 
         public List<Product> Products { get; set; }
-
-        public string Url { get; set; }
-
-        public Receipt()
-        {
-            Products = new List<Product>();
-        }
-
-        public void GenerateApiUrlForReceipt()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
