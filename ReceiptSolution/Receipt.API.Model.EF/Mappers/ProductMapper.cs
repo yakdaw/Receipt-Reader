@@ -1,26 +1,43 @@
 ﻿namespace Receipt.API.Model.EF.Mappers
 {
-    using Receipt.Domain.Entities;
+    using Domain.Entities;
 
-    internal class ProductMapper
+    public class ProductMapper
     {
-        public static Product MapFrom(DatabaseModel.Products from)
+        public Product MapFromDatabase(DatabaseModel.Product databaseProduct)
         {
-            if (from == null)
+            if (databaseProduct == null)
             {
                 return null;
             }
 
-            var to = new Product();
-            to.ID = from.Id;
-            to.Name = from.Name;
-            to.Price = from.Price;
-            to.Category = from.Category;
-            to.PurchasePlace = from.PurchasePlace;
-            to.PurchaseDate = from.PurchaseDate;
-            to.AddDate = from.AddDate;
+            var domainProduct = new Product();
+            domainProduct.Id = databaseProduct.Id;
+            domainProduct.ReceiptId = databaseProduct.ReceiptId;
+            domainProduct.Name = databaseProduct.Name;
+            domainProduct.Price = databaseProduct.Price;
+            domainProduct.Quantity = databaseProduct.Quantity;
+            domainProduct.Category = databaseProduct.Category;
 
-            return to;
+            return domainProduct;
+        }
+
+        public DatabaseModel.Product MapToDatabase(Product domainProduct)
+        {
+            if (domainProduct == null)
+            {
+                return null;
+            }
+
+            var databaseProduct = new DatabaseModel.Product();
+            databaseProduct.Id = domainProduct.Id;
+            databaseProduct.ReceiptId = domainProduct.ReceiptId;
+            databaseProduct.Name = domainProduct.Name;
+            databaseProduct.Price = domainProduct.Price;
+            databaseProduct.Quantity = domainProduct.Quantity;
+            databaseProduct.Category = domainProduct.Category;
+
+            return databaseProduct;
         }
     }
 }

@@ -8,6 +8,9 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
+    /// <summary>
+    /// Account based operations
+    /// </summary>
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
@@ -16,9 +19,6 @@
         private ResponseService responseService = null;
         private TokenService tokenService = null;
 
-        /// <summary>
-        /// Account based operations
-        /// </summary>
         public AccountController()
         {
             repository = new AuthRepository();

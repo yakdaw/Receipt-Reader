@@ -1,10 +1,12 @@
 ﻿namespace Receipt.API.Model
 {
-    using Receipt.Domain.Entities;
+    using Domain.Entities;
     using System.Collections.ObjectModel;
 
     public interface IProductRepository
     {
-        Collection<Product> GetAll(string userName);
+        Collection<Product> GetAllUserProducts(string userId);
+        Collection<Product> GetUserProductsByReceipt(string userId, int receiptId);
+        Product GetUserProductById(string userId, int receiptId, int productId);
     }
 }

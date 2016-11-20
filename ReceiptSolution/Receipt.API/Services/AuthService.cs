@@ -14,5 +14,13 @@
 
             return claims.FirstOrDefault(x => x.Type == "name").Value;
         }
+
+        internal string GetUserId(IPrincipal user)
+        {
+            var identity = (ClaimsIdentity)user.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+
+            return claims.FirstOrDefault(x => x.Type == "id").Value;
+        }
     }
 }

@@ -1,33 +1,81 @@
 ﻿namespace Receipt.API.Model.EF
 {
-    using Receipt.Domain.Entities;
-    using Receipt.API.Model;
-    using System;
-    using System.Collections.ObjectModel;
+    using Domain.Entities;
+    using Mappers;
+    using Model;
     using System.Collections.Generic;
-    using DatabaseModel;
+    using System.Collections.ObjectModel;
     using System.Linq;
 
     public class ProductRepository : IProductRepository
     {
-        public Collection<Product> GetAll(string userName)
-        {
-            List<DatabaseModel.Products> products;
+        private ProductMapper productMapper = null;
 
-            using (var db = new ReceiptEntities())
+        public ProductRepository()
+        {
+            productMapper = new ProductMapper();
+        }
+
+        public Collection<Product> GetAllUserProducts(string userId)
+        {
+            List<DatabaseModel.Product> products;
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
-                products = db.Products.Where(x => x.User == userName).ToList();
+                products = db.Product.Where(p => p.UserId == userId).ToList();
             }
 
             var domainProducts = new Collection<Product>();
 
             foreach (var product in products)
             {
-                var domainProduct = Mappers.ProductMapper.MapFrom(product);
+                var domainProduct = productMapper.MapFromDatabase(product);
                 domainProducts.Add(domainProduct);
             }
 
             return domainProducts;
         }
+
+        public Collection<Product> GetUserProductsByReceipt(string userId, int receiptId)
+        {
+            List<DatabaseModel.Product> products;
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                products = db.Product.Where(p => (p.UserId == userId) && (p.ReceiptId == receiptId)).ToList();
+            }
+
+            if (products.Count == 0)
+            {
+                return null;
+            }
+
+            var domainProducts = new Collection<Product>();
+
+            foreach (var product in products)
+            {
+                var domainProduct = productMapper.MapFromDatabase(product);
+                domainProducts.Add(domainProduct);
+            }
+
+            return domainProducts;
+        }
+
+        public Product GetUserProductById(string userId, int receiptId, int productId)
+        {
+            DatabaseModel.Product product;
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                product = db.Product.FirstOrDefault(p => (p.UserId == userId) && (p.ReceiptId == receiptId)
+                    && (p.Id == productId));
+            }
+
+            var domainProduct = productMapper.MapFromDatabase(product);
+
+            return domainProduct;
+        }
+
+
     }
 }

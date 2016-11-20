@@ -51,27 +51,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseModel\Products.cs">
-      <DependentUpon>Receipt.tt</DependentUpon>
+    <Compile Include="DatabaseModel\AspNetRoles.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseModel\Receipt.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Receipt.Context.tt</DependentUpon>
+    <Compile Include="DatabaseModel\AspNetUserClaims.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\AspNetUserLogins.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\AspNetUsers.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\CustomizedProduct.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\C__MigrationHistory.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Product.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseModel\Receipt.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Receipt.tt</DependentUpon>
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseModel\Receipt.Designer.cs">
+    <Compile Include="DatabaseModel\ReceiptReaderModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Receipt.edmx</DependentUpon>
+      <DependentUpon>ReceiptReaderModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\ReceiptReaderModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\ReceiptReaderModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReceiptReaderModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Mappers\ProductMapper.cs" />
+    <Compile Include="Mappers\ReceiptMapper.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceiptRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Receipt.Domain\Receipt.Domain.csproj">
@@ -85,35 +108,32 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EntityDeploy Include="DatabaseModel\Receipt.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Receipt.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="DatabaseModel\Receipt.edmx.diagram">
-      <DependentUpon>Receipt.edmx</DependentUpon>
+    <EntityDeploy Include="DatabaseModel\ReceiptReaderModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ReceiptReaderModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DatabaseModel\ReceiptReaderModel.edmx.diagram">
+      <DependentUpon>ReceiptReaderModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DatabaseModel\Receipt.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Receipt.edmx</DependentUpon>
-      <LastGenOutput>Receipt.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DatabaseModel\Receipt.edmx.sql" />
-    <Content Include="DatabaseModel\Receipt.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Receipt.edmx</DependentUpon>
-      <LastGenOutput>Receipt.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="DatabaseModel\ReceiptReaderModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ReceiptReaderModel.edmx</DependentUpon>
+      <LastGenOutput>ReceiptReaderModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DatabaseModel\ReceiptReaderModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ReceiptReaderModel.edmx</DependentUpon>
+      <LastGenOutput>ReceiptReaderModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,15 +12,12 @@ namespace Receipt.API.Model.EF.DatabaseModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Products
+    public partial class AspNetUserLogins
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public string Category { get; set; }
-        public string PurchasePlace { get; set; }
-        public Nullable<System.DateTime> PurchaseDate { get; set; }
-        public System.DateTime AddDate { get; set; }
-        public string User { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
+        public string UserId { get; set; }
+    
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }
