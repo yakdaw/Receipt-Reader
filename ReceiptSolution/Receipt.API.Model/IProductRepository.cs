@@ -7,6 +7,6 @@
     {
         Collection<Product> GetAllUserProducts(string userId);
         Collection<Product> GetUserProductsByReceipt(string userId, int receiptId);
-        Product GetUserProductById(string userId, int productId);
+        Product GetUserProductById(string userId, int receiptId, int productId);
     }
 }

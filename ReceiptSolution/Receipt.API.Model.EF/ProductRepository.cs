@@ -22,7 +22,7 @@
 
             using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
-                products = db.Product.Where(p => p.Receipt.UserId == userId).ToList();
+                products = db.Product.Where(p => p.UserId == userId).ToList();
             }
 
             var domainProducts = new Collection<Product>();
@@ -42,7 +42,7 @@
 
             using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
-                products = db.Product.Where(p => (p.Receipt.UserId == userId) && (p.ReceiptId == receiptId)).ToList();
+                products = db.Product.Where(p => (p.UserId == userId) && (p.ReceiptId == receiptId)).ToList();
             }
 
             if (products.Count == 0)
@@ -61,13 +61,14 @@
             return domainProducts;
         }
 
-        public Product GetUserProductById(string userId, int productId)
+        public Product GetUserProductById(string userId, int receiptId, int productId)
         {
             DatabaseModel.Product product;
 
             using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
-                product = db.Product.FirstOrDefault(p => (p.Receipt.UserId == userId) && (p.Id == productId));
+                product = db.Product.FirstOrDefault(p => (p.UserId == userId) && (p.ReceiptId == receiptId)
+                    && (p.Id == productId));
             }
 
             var domainProduct = productMapper.MapFromDatabase(product);

@@ -105,14 +105,15 @@
         /// </summary>
         /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
+        /// <param name="receiptId">Receipt ID</param>
         /// <param name="productId">Product ID</param>
         /// <response code="200">User product successfully sent.</response>
         /// <response code="400">No authentication token. / Wrong user name in query.</response>
         /// <response code="404">Product with specified ID not found.</response>
         [HttpGet]
         [ResponseType(typeof(ProductModel))]
-        [Route("api/{userName}/products/{productId}")]
-        public HttpResponseMessage GetUserProductById(HttpRequestMessage request, string userName, int productId)
+        [Route("api/{userName}/receipts/{receiptId}/products/{productId}")]
+        public HttpResponseMessage GetUserProductById(HttpRequestMessage request, string userName, int receiptId, int productId)
         {
             string tokenName = this.authService.GetUserName(this.User);
 
@@ -122,11 +123,12 @@
             }
 
             string userId = this.authService.GetUserId(this.User);
-            var domainProduct = this.repository.GetUserProductById(userId, productId);
+            var domainProduct = this.repository.GetUserProductById(userId, receiptId, productId);
 
             if (domainProduct == null)
             {
-                return request.CreateResponse(HttpStatusCode.NotFound, "No product with id " + productId + " for user " + userName);
+                return request.CreateResponse(HttpStatusCode.NotFound, "No product with id " + productId 
+                    + " in receipt " + receiptId + " for user " + userName);
             }
 
             var host = request.RequestUri.Authority;
