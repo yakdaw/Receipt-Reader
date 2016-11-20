@@ -16,7 +16,7 @@
             domainReceipt.UserId = databaseReceipt.UserId;
             domainReceipt.AddDate = databaseReceipt.AddDate;
             domainReceipt.PurchaseDate = databaseReceipt.PurchaseDate;
-            databaseReceipt.PurchasePlace = databaseReceipt.PurchasePlace;
+            domainReceipt.PurchasePlace = databaseReceipt.PurchasePlace;
             domainReceipt.ControlSum = databaseReceipt.ControlSum;
             domainReceipt.Image = databaseReceipt.Image;
 
