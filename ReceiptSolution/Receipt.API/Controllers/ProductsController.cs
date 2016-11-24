@@ -31,7 +31,7 @@
         /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
         /// <response code="200">User products successfully sent.</response>
-        /// <response code="400">No authentication token. / Wrong user name in query.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ProductModel>))]
         [Route("api/{userName}/products")]
@@ -66,7 +66,7 @@
         /// <param name="userName">Name of user</param>
         /// <param name="receiptId">Receipt ID</param>
         /// <response code="200">User products successfully sent.</response>
-        /// <response code="400">No authentication token. / Wrong user name in query.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
         /// <response code="404">Receipt with specified ID not found.</response>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ProductModel>))]
@@ -108,7 +108,7 @@
         /// <param name="receiptId">Receipt ID</param>
         /// <param name="productId">Product ID</param>
         /// <response code="200">User product successfully sent.</response>
-        /// <response code="400">No authentication token. / Wrong user name in query.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
         /// <response code="404">Product with specified ID not found.</response>
         [HttpGet]
         [ResponseType(typeof(ProductModel))]

@@ -33,9 +33,12 @@
             var databaseReceipt = new DatabaseModel.Receipt();
             databaseReceipt.Id = domainReceipt.Id;
             databaseReceipt.UserId = domainReceipt.UserId;
-            databaseReceipt.AddDate = DateTime.Now;
+            databaseReceipt.AddDate = domainReceipt.AddDate;
             databaseReceipt.PurchaseDate = domainReceipt.PurchaseDate;
-            databaseReceipt.PurchasePlace = domainReceipt.PurchasePlace;
+
+            databaseReceipt.PurchasePlace = string.IsNullOrWhiteSpace(domainReceipt.PurchasePlace) ?
+                null : domainReceipt.PurchasePlace;
+
             databaseReceipt.ControlSum = domainReceipt.ControlSum;
             databaseReceipt.Image = domainReceipt.Image;
 

@@ -81,6 +81,7 @@
                 var databaseReceipt = receiptMapper.MapToDatabase(receipt);
                 databaseReceipt.Id = GenerateReceiptIdForUser(db, userId);
                 databaseReceipt.UserId = userId;
+                databaseReceipt.AddDate = DateTime.Now;
 
                 db.Receipt.Add(databaseReceipt);
 

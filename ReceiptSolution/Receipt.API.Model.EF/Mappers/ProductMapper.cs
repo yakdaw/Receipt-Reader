@@ -35,7 +35,9 @@
             databaseProduct.Name = domainProduct.Name;
             databaseProduct.Price = domainProduct.Price;
             databaseProduct.Quantity = domainProduct.Quantity;
-            databaseProduct.Category = domainProduct.Category;
+
+            databaseProduct.Category = string.IsNullOrWhiteSpace(domainProduct.Category) ?
+                null : domainProduct.Category;
 
             return databaseProduct;
         }
