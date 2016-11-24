@@ -200,8 +200,11 @@
     <Compile Include="Authentication\AuthRepository.cs" />
     <Compile Include="Controllers\ReceiptsController.cs" />
     <Compile Include="Models\LostPasswordModel.cs" />
+    <Compile Include="Models\NewProductModel.cs" />
+    <Compile Include="Models\NewReceiptModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ReceiptModel.cs" />
+    <Compile Include="Models\ValidationAttributes\CannotBeEmptyAttribute.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />

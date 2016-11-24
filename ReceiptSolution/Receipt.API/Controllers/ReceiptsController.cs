@@ -9,6 +9,7 @@
     using System.Web.Http;
     using System.Web.Http.Description;
     using Models;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Receipt based operations
@@ -18,11 +19,13 @@
     {
         private readonly IReceiptRepository repository;
         private readonly AuthService authService;
+        private readonly ResponseService responseService;
 
         public ReceiptsController(IReceiptRepository repository)
         {
             this.repository = repository;
             this.authService = new AuthService();
+            this.responseService = new ResponseService();
         }
 
         /// <summary>
@@ -31,7 +34,7 @@
         /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
         /// <response code="200">User receipts successfully sent.</response>
-        /// <response code="400">No authentication token. / Wrong user name in query.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ReceiptModel>))]
         [Route("api/{userName}/receipts")]
@@ -66,7 +69,8 @@
         /// <param name="userName">Name of user</param>
         /// <param name="receiptId">Receipt ID</param>
         /// <response code="200">User receipt successfully sent.</response>
-        /// <response code="400">No authentication token. / Wrong user name in query.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        /// <response code="404">Receipt with given ID not found.</response>
         [HttpGet]
         [ResponseType(typeof(ReceiptModel))]
         [Route("api/{userName}/receipts/{receiptId}")]
@@ -100,7 +104,7 @@
         /// <param name="userName">Name of user</param>
         /// <param name="receiptId">Receipt ID</param>
         /// <response code="200">User receipt image successfully sent.</response>
-        /// <response code="400">No authentication token. / Wrong user name in query.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
         [HttpGet]
         [ResponseType(typeof(byte[]))]
         [Route("api/{userName}/receipts/{receiptId}/image")]
@@ -117,6 +121,38 @@
             var receiptImage = this.repository.GetUserReceiptImage(userId, receiptId);
 
             return request.CreateResponse(HttpStatusCode.OK, receiptImage);
+        }
+
+        /// <summary>
+        /// Add new user receipt
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <param name="receipt">New receipt</param>
+        /// <response code="200">User receipt successfully added.</response>
+        /// <response code="400">Wrong JSON request receipt model.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        [HttpPost]
+        [Route("api/{userName}/receipts")]
+        public IHttpActionResult AddNewUserReceipt(string userName, NewReceiptModel receipt)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
+            }
+
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return Unauthorized();
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            repository.Add(userId, receipt.MapToDomainReceipt());
+
+            return Ok();
         }
     }
 }

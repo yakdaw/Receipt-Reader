@@ -1,6 +1,7 @@
 ﻿namespace Receipt.API.Model.EF.Mappers
 {
     using Domain.Entities;
+    using System;
 
     class ReceiptMapper
     {
@@ -13,7 +14,6 @@
 
             var domainReceipt = new Receipt();
             domainReceipt.Id = databaseReceipt.Id;
-            domainReceipt.UserId = databaseReceipt.UserId;
             domainReceipt.AddDate = databaseReceipt.AddDate;
             domainReceipt.PurchaseDate = databaseReceipt.PurchaseDate;
             domainReceipt.PurchasePlace = databaseReceipt.PurchasePlace;
@@ -33,13 +33,11 @@
             var databaseReceipt = new DatabaseModel.Receipt();
             databaseReceipt.Id = domainReceipt.Id;
             databaseReceipt.UserId = domainReceipt.UserId;
-            databaseReceipt.AddDate = domainReceipt.AddDate;
+            databaseReceipt.AddDate = DateTime.Now;
             databaseReceipt.PurchaseDate = domainReceipt.PurchaseDate;
             databaseReceipt.PurchasePlace = domainReceipt.PurchasePlace;
             databaseReceipt.ControlSum = domainReceipt.ControlSum;
             databaseReceipt.Image = domainReceipt.Image;
-
-            // domainReceipt.Products - left for further use
 
             return databaseReceipt;
         }

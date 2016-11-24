@@ -5,14 +5,17 @@
     using System.Collections.Generic;
     using System.Linq;
     using Mappers;
+    using System;
 
     public class ReceiptRepository : IReceiptRepository
     {
         private ReceiptMapper receiptMapper = null;
+        private ProductMapper productMapper = null;
 
         public ReceiptRepository()
         {
             receiptMapper = new ReceiptMapper();
+            productMapper = new ProductMapper();
         }
 
         public Collection<Receipt> GetAllUserReceipts(string userId)
@@ -64,6 +67,50 @@
             }
 
             return imageBytes;
+        }
+
+        public void Add(string userId, Receipt receipt)
+        {
+            if (receipt == null)
+            {
+                throw new ArgumentNullException("receipt");
+            }
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                var databaseReceipt = receiptMapper.MapToDatabase(receipt);
+                databaseReceipt.Id = GenerateReceiptIdForUser(db, userId);
+                databaseReceipt.UserId = userId;
+
+                db.Receipt.Add(databaseReceipt);
+
+                int count = 1;
+                foreach (Product product in receipt.Products)
+                {
+                    var databaseProduct = productMapper.MapToDatabase(product);
+                    databaseProduct.Id = count;
+                    databaseProduct.UserId = userId;
+                    databaseProduct.ReceiptId = databaseReceipt.Id;
+
+                    db.Product.Add(databaseProduct);
+                    count++;
+                }
+
+                db.SaveChanges();
+            }
+        }
+
+        private int GenerateReceiptIdForUser(DatabaseModel.ReceiptReaderDatabaseContext db, string userId)
+        {
+            var query = db.Receipt.Where(r => r.UserId == userId);
+
+            if (query.Count() == 0)
+            {
+                return 1;
+            }
+
+            var lastMax = query.Max(r => r.Id);
+            return lastMax + 1;
         }
     }
 }
