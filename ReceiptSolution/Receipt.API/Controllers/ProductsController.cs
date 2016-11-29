@@ -35,7 +35,7 @@
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ProductModel>))]
         [Route("api/{userName}/products")]
-        public HttpResponseMessage GetAllUserProducts(HttpRequestMessage request, string userName)
+        public HttpResponseMessage GetAllUserProducts(string userName)
         {
             string tokenName = this.authService.GetUserName(this.User);
 
@@ -47,7 +47,7 @@
             string userId = this.authService.GetUserId(this.User);
             var domainProducts = this.repository.GetAllUserProducts(userId);
 
-            var host = request.RequestUri.Authority;
+            var host = Request.RequestUri.Authority;
             var products = new List<ProductModel>();
 
             foreach (Product domainProduct in domainProducts)
@@ -56,7 +56,7 @@
                 products.Add(product);
             }
 
-            return request.CreateResponse(HttpStatusCode.OK, products);
+            return Request.CreateResponse(HttpStatusCode.OK, products);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ProductModel>))]
         [Route("api/{userName}/receipts/{receiptId}/products")]
-        public HttpResponseMessage GetUserProductsByReceipt(HttpRequestMessage request, string userName, int receiptId)
+        public HttpResponseMessage GetUserProductsByReceipt(string userName, int receiptId)
         {
             string tokenName = this.authService.GetUserName(this.User);
 
@@ -85,10 +85,10 @@
 
             if (domainProducts == null)
             {
-                return request.CreateResponse(HttpStatusCode.NotFound, "No receipt with id " + receiptId + " for user " + userName);
+                return Request.CreateResponse(HttpStatusCode.NotFound, "No receipt with id " + receiptId + " for user " + userName);
             }
 
-            var host = request.RequestUri.Authority;
+            var host = Request.RequestUri.Authority;
             var products = new List<ProductModel>();
 
             foreach (Product domainProduct in domainProducts)
@@ -97,7 +97,7 @@
                 products.Add(product);
             }
 
-            return request.CreateResponse(HttpStatusCode.OK, products);
+            return Request.CreateResponse(HttpStatusCode.OK, products);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@
         [HttpGet]
         [ResponseType(typeof(ProductModel))]
         [Route("api/{userName}/receipts/{receiptId}/products/{productId}")]
-        public HttpResponseMessage GetUserProductById(HttpRequestMessage request, string userName, int receiptId, int productId)
+        public HttpResponseMessage GetUserProductById(string userName, int receiptId, int productId)
         {
             string tokenName = this.authService.GetUserName(this.User);
 
@@ -127,14 +127,14 @@
 
             if (domainProduct == null)
             {
-                return request.CreateResponse(HttpStatusCode.NotFound, "No product with id " + productId 
+                return Request.CreateResponse(HttpStatusCode.NotFound, "No product with id " + productId 
                     + " in receipt " + receiptId + " for user " + userName);
             }
 
-            var host = request.RequestUri.Authority;
+            var host = Request.RequestUri.Authority;
             var product = new ProductModel(domainProduct, userName, host);
 
-            return request.CreateResponse(HttpStatusCode.OK, product);
+            return Request.CreateResponse(HttpStatusCode.OK, product);
         }
     }
 }

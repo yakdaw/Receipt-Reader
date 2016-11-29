@@ -2,7 +2,9 @@
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using Receipt.API.App_Start.Swagger;
 using Receipt.API.Providers;
+using Swashbuckle.Application;
 using System;
 using System.Web.Http;
 
@@ -19,9 +21,17 @@ namespace Receipt.API
             ConfigureOAuth(app);
             ConfigureDataProtection(app);
             HttpConfiguration config = new HttpConfiguration();
+
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            Swashbuckle.Bootstrapper.Init(config);
+
+            config.EnableSwagger(c =>
+            {
+                c.SingleApiVersion("v1", "WebAPI");
+                c.OperationFilter<AuthorizationHeaderFilter>();
+                c.IncludeXmlComments(GetXmlCommentsPath());
+            }).EnableSwaggerUi();
+
             app.UseWebApi(config);
         }
 
@@ -43,6 +53,11 @@ namespace Receipt.API
         public void ConfigureDataProtection(IAppBuilder app)
         {
             dataProtectionProvider = app.GetDataProtectionProvider();
+        }
+
+        protected static string GetXmlCommentsPath()
+        {
+            return string.Format(@"{0}\bin\Receipt.API.XML", AppDomain.CurrentDomain.BaseDirectory);
         }
     }
 }

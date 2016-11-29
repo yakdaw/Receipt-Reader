@@ -38,7 +38,7 @@
         [HttpGet]
         [ResponseType(typeof(IEnumerable<ReceiptModel>))]
         [Route("api/{userName}/receipts")]
-        public HttpResponseMessage GetAllUserReceipts(HttpRequestMessage request, string userName)
+        public HttpResponseMessage GetAllUserReceipts(string userName)
         {
             string tokenName = this.authService.GetUserName(this.User);
 
@@ -50,7 +50,7 @@
             string userId = this.authService.GetUserId(this.User);
             var domainReceipts = this.repository.GetAllUserReceipts(userId);
 
-            var host = request.RequestUri.Authority;
+            var host = Request.RequestUri.Authority;
             var receipts = new List<ReceiptModel>();
 
             foreach (Receipt domainReceipt in domainReceipts)
@@ -59,7 +59,7 @@
                 receipts.Add(receipt);
             }
 
-            return request.CreateResponse(HttpStatusCode.OK, receipts);
+            return Request.CreateResponse(HttpStatusCode.OK, receipts);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@
         [HttpGet]
         [ResponseType(typeof(ReceiptModel))]
         [Route("api/{userName}/receipts/{receiptId}")]
-        public HttpResponseMessage GetUserReceiptById(HttpRequestMessage request, string userName, int receiptId)
+        public HttpResponseMessage GetUserReceiptById(string userName, int receiptId)
         {
             string tokenName = this.authService.GetUserName(this.User);
 
@@ -88,13 +88,13 @@
 
             if (domainReceipt == null)
             {
-                return request.CreateResponse(HttpStatusCode.NotFound, "No receipt with id " + receiptId + " for user " + userName);
+                return Request.CreateResponse(HttpStatusCode.NotFound, "No receipt with id " + receiptId + " for user " + userName);
             }
 
-            var host = request.RequestUri.Authority;
+            var host = Request.RequestUri.Authority;
             var receipt = new ReceiptModel(domainReceipt, userName, host);
 
-            return request.CreateResponse(HttpStatusCode.OK, receipt);
+            return Request.CreateResponse(HttpStatusCode.OK, receipt);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@
         [HttpGet]
         [ResponseType(typeof(byte[]))]
         [Route("api/{userName}/receipts/{receiptId}/image")]
-        public HttpResponseMessage GetUserReceiptImage(HttpRequestMessage request, string userName, int receiptId)
+        public HttpResponseMessage GetUserReceiptImage(string userName, int receiptId)
         {
             string tokenName = this.authService.GetUserName(this.User);
 
@@ -120,7 +120,7 @@
             string userId = this.authService.GetUserId(this.User);
             var receiptImage = this.repository.GetUserReceiptImage(userId, receiptId);
 
-            return request.CreateResponse(HttpStatusCode.OK, receiptImage);
+            return Request.CreateResponse(HttpStatusCode.OK, receiptImage);
         }
 
         /// <summary>
