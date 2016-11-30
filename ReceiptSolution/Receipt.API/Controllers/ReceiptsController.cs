@@ -10,6 +10,7 @@
     using System.Web.Http.Description;
     using Models;
     using System.Threading.Tasks;
+    using System;
 
     /// <summary>
     /// Receipt based operations
@@ -31,7 +32,6 @@
         /// <summary>
         /// Get all user receipts
         /// </summary>
-        /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
         /// <response code="200">User receipts successfully sent.</response>
         /// <response code="401">No authentication token. / Wrong user name in query.</response>
@@ -65,7 +65,6 @@
         /// <summary>
         /// Get specified user receipt
         /// </summary>
-        /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
         /// <param name="receiptId">Receipt ID</param>
         /// <response code="200">User receipt successfully sent.</response>
@@ -100,7 +99,6 @@
         /// <summary>
         /// Get specified receipt image
         /// </summary>
-        /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
         /// <param name="receiptId">Receipt ID</param>
         /// <response code="200">User receipt image successfully sent.</response>
@@ -151,6 +149,85 @@
             string userId = this.authService.GetUserId(this.User);
 
             repository.Add(userId, receipt.MapToDomainReceipt());
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Update user receipt
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <param name="receiptId">Id of receipt to update</param>
+        /// <param name="updatedReceipt">Updated receipt values</param>
+        /// <response code="200">User receipt successfully updated.</response>
+        /// <response code="400">Wrong JSON request receipt model / No receipt with given id.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        [HttpPut]
+        [Route("api/{userName}/receipts/{receiptId}")]
+        public IHttpActionResult UpdateUserReceipt(string userName, int receiptId, UpdatedReceiptModel updatedReceipt)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
+            }
+
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return Unauthorized();
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            try
+            {
+                repository.Update(userId, receiptId, updatedReceipt.MapToDomainReceipt());
+            }
+            catch (Exception)
+            {
+                return BadRequest("Receipt was not updated.");
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Delete user receipt
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <param name="receiptId">Id of receipt to delete</param>
+        /// <response code="200">User receipt successfully deleted.</response>
+        /// <response code="400">Wrong JSON request receipt model / No receipt with given id.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        [HttpDelete]
+        [Route("api/{userName}/receipts/{receiptId}")]
+        public IHttpActionResult DeleteUserReceipt(string userName, int receiptId)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
+            }
+
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return Unauthorized();
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            try
+            {
+                repository.Delete(userId, receiptId);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Receipt was not deleted.");
+            }
 
             return Ok();
         }

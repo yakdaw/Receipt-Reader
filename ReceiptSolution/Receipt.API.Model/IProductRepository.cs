@@ -8,5 +8,9 @@
         Collection<Product> GetAllUserProducts(string userId);
         Collection<Product> GetUserProductsByReceipt(string userId, int receiptId);
         Product GetUserProductById(string userId, int receiptId, int productId);
+
+        void Add(string userId, int receiptId, Product product);
+        void Update(string userId, int receiptId, int productId, Product updatedProduct);
+        void Delete(string userId, int receiptId, int productId);
     }
 }

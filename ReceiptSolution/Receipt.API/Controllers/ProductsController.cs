@@ -4,6 +4,7 @@
     using Model;
     using Models;
     using Services;
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -15,6 +16,7 @@
     {
         private readonly IProductRepository repository;
         private readonly AuthService authService;
+        private readonly ResponseService responseService;
 
         /// <summary>
         /// Product based operations
@@ -23,12 +25,12 @@
         {
             this.repository = repository;
             this.authService = new AuthService();
+            this.responseService = new ResponseService();
         }
 
         /// <summary>
         /// Get all user products
         /// </summary>
-        /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
         /// <response code="200">User products successfully sent.</response>
         /// <response code="401">No authentication token. / Wrong user name in query.</response>
@@ -62,7 +64,6 @@
         /// <summary>
         /// Get specified receipt products
         /// </summary>
-        /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
         /// <param name="receiptId">Receipt ID</param>
         /// <response code="200">User products successfully sent.</response>
@@ -103,7 +104,6 @@
         /// <summary>
         /// Get specified user product
         /// </summary>
-        /// <param name="request">Request with bearer token authentication for specified user</param>
         /// <param name="userName">Name of user</param>
         /// <param name="receiptId">Receipt ID</param>
         /// <param name="productId">Product ID</param>
@@ -135,6 +135,120 @@
             var product = new ProductModel(domainProduct, userName, host);
 
             return Request.CreateResponse(HttpStatusCode.OK, product);
+        }
+
+        /// <summary>
+        /// Add new user product to receipt
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <param name="receiptId">Receipt id</param>
+        /// <param name="product">New product</param>
+        /// <response code="200">User product successfully added.</response>
+        /// <response code="400">Wrong JSON request product model. / Wrong receipt ID.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        [HttpPost]
+        [Route("api/{userName}/receipts/{receiptId}/products")]
+        public IHttpActionResult AddNewProductToReceipt(string userName, int receiptId, NewProductModel product)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
+            }
+
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return Unauthorized();
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            repository.Add(userId, receiptId, product.MapToDomainProduct());
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Update user product
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <param name="receiptId">Receipt ID</param>
+        /// <param name="productId">ID of product to update</param>
+        /// <param name="updatedProduct">Updated product values</param>
+        /// <response code="200">User product in receipt successfully updated.</response>
+        /// <response code="400">Wrong JSON request product model / No product with given ID in receipt.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        [HttpPut]
+        [Route("api/{userName}/receipts/{receiptId}/products/{productId}")]
+        public IHttpActionResult UpdateProductInReceipt(string userName, int receiptId, int productId, UpdatedProductModel updatedProduct)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
+            }
+
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return Unauthorized();
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            try
+            {
+                repository.Update(userId, receiptId, productId, updatedProduct.MapToDomainProduct());
+            }
+            catch (Exception)
+            {
+                return BadRequest("Product was not updated.");
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Delete user product
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <param name="receiptId">Receipt ID</param>
+        /// <param name="productId">ID of product to delete</param>
+        /// <response code="200">User product successfully deleted.</response>
+        /// <response code="400">Wrong JSON request receipt model / No receipt with given id.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        [HttpDelete]
+        [Route("api/{userName}/receipts/{receiptId}/products/{productId}")]
+        public IHttpActionResult DeleteProductInReceipt(string userName, int receiptId, int productId)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = responseService.ModelStateErrorsToString(ModelState);
+                return BadRequest(message);
+            }
+
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return Unauthorized();
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            try
+            {
+                repository.Delete(userId, receiptId, productId);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Product was not deleted.");
+            }
+
+            return Ok();
         }
     }
 }

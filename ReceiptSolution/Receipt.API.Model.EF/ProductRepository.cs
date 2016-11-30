@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System;
 
     public class ProductRepository : IProductRepository
     {
@@ -76,6 +77,96 @@
             return domainProduct;
         }
 
+        public void Add(string userId, int receiptId, Product product)
+        {
+            if (product == null)
+            {
+                throw new ArgumentNullException("product");
+            }
 
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                var databaseProduct = productMapper.MapToDatabase(product);
+                databaseProduct.Id = GenerateProductIdForReceipt(db, userId, receiptId);
+                databaseProduct.UserId = userId;
+                databaseProduct.ReceiptId = receiptId;
+
+                db.Product.Add(databaseProduct);
+
+                db.SaveChanges();
+            }
+        }
+
+        private int GenerateProductIdForReceipt(DatabaseModel.ReceiptReaderDatabaseContext db, string userId, int receiptId)
+        {
+            var query = db.Product.Where(p => p.UserId == userId && p.ReceiptId == receiptId);
+
+            if (query.Count() == 0)
+            {
+                return 1;
+            }
+
+            var lastMax = query.Max(r => r.Id);
+            return lastMax + 1;
+        }
+
+        public void Update(string userId, int receiptId, int productId, Product updatedProduct)
+        {
+            if (updatedProduct == null)
+            {
+                throw new ArgumentNullException("updatedProduct");
+            }
+
+            var dbUpdatedProduct = productMapper.MapToDatabase(updatedProduct);
+            dbUpdatedProduct.Id = productId;
+            dbUpdatedProduct.UserId = userId;
+            dbUpdatedProduct.ReceiptId = receiptId;
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                db.Product.Attach(dbUpdatedProduct);
+                var entry = db.Entry(dbUpdatedProduct);
+
+                entry.Property(e => e.Name).IsModified = true;
+                entry.Property(e => e.Price).IsModified = true;
+                entry.Property(e => e.Quantity).IsModified = true;
+                entry.Property(e => e.Category).IsModified = true;
+
+                db.SaveChanges();
+            }
+        }
+
+        public void Delete(string userId, int receiptId, int productId)
+        {
+            var product = new DatabaseModel.Product()
+            {
+                Id = productId,
+                UserId = userId,
+                ReceiptId = receiptId
+            };
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+
+                var productCount = db.Product.Count(p => p.UserId == userId && p.ReceiptId == receiptId);
+
+                db.Product.Attach(product);
+                db.Product.Remove(product);
+
+                if (productCount == 1)
+                {
+                    var receipt = new DatabaseModel.Receipt()
+                    {
+                        Id = receiptId,
+                        UserId = userId
+                    };
+
+                    db.Receipt.Attach(receipt);
+                    db.Receipt.Remove(receipt);
+                }
+
+                db.SaveChanges();
+            }
+        }
     }
 }

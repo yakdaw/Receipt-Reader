@@ -101,6 +101,48 @@
             }
         }
 
+        public void Update(string userId, int receiptId, Receipt updatedReceipt)
+        {
+            if (updatedReceipt == null)
+            {
+                throw new ArgumentNullException("updatedReceipt");
+            }
+
+            var dbUpdatedReceipt = receiptMapper.MapToDatabase(updatedReceipt);
+            dbUpdatedReceipt.UserId = userId;
+            dbUpdatedReceipt.Id = receiptId;
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                db.Receipt.Attach(dbUpdatedReceipt);
+                var entry = db.Entry(dbUpdatedReceipt);
+
+                entry.Property(e => e.PurchaseDate).IsModified = true;
+                entry.Property(e => e.PurchasePlace).IsModified = true;
+
+                db.SaveChanges();
+            }
+        }
+
+        public void Delete(string userId, int receiptId)
+        {
+            var receipt = new DatabaseModel.Receipt()
+            {
+                Id = receiptId,
+                UserId = userId
+            };
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                db.Product.RemoveRange(db.Product.Where(p => p.UserId == userId && p.ReceiptId == receiptId));
+
+                db.Receipt.Attach(receipt);
+                db.Receipt.Remove(receipt);
+
+                db.SaveChanges();
+            }
+        }
+
         private int GenerateReceiptIdForUser(DatabaseModel.ReceiptReaderDatabaseContext db, string userId)
         {
             var query = db.Receipt.Where(r => r.UserId == userId);

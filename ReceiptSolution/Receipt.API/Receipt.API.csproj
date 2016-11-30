@@ -204,6 +204,8 @@
     <Compile Include="Models\NewReceiptModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ReceiptModel.cs" />
+    <Compile Include="Models\UpdatedProductModel.cs" />
+    <Compile Include="Models\UpdatedReceiptModel.cs" />
     <Compile Include="Models\ValidationAttributes\CannotBeEmptyAttribute.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Controllers\AccountController.cs" />

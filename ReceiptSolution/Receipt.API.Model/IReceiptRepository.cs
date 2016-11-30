@@ -10,5 +10,7 @@
         byte[] GetUserReceiptImage(string userId, int receiptId);
 
         void Add(string userId, Receipt receipt);
+        void Update(string userId, int receiptId, Receipt updatedReceipt);
+        void Delete(string userId, int receiptId);
     }
 }
