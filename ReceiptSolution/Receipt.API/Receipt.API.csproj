@@ -199,6 +199,7 @@
     <Compile Include="Authentication\AuthContext.cs" />
     <Compile Include="Authentication\AuthRepository.cs" />
     <Compile Include="Controllers\ReceiptsController.cs" />
+    <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\LostPasswordModel.cs" />
     <Compile Include="Models\NewProductModel.cs" />
     <Compile Include="Models\NewReceiptModel.cs" />

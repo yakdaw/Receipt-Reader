@@ -63,6 +63,12 @@
     <Compile Include="DatabaseModel\AspNetUsers.cs">
       <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseModel\BasicProduct.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Category.cs">
+      <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseModel\CustomizedProduct.cs">
       <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
     </Compile>
@@ -90,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReceiptReaderModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Mappers\CategoryMapper.cs" />
     <Compile Include="Mappers\ProductMapper.cs" />
     <Compile Include="Mappers\ReceiptMapper.cs" />
     <Compile Include="ProductRepository.cs" />

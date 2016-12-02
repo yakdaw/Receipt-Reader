@@ -231,5 +231,45 @@
 
             return Ok();
         }
+
+        /// <summary>
+        /// Get categories for user receipt
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <param name="receiptId">Id of receipt to delete</param>
+        /// <response code="200">User receipt categories successfully sent.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<CategoryModel>))]
+        [Route("api/{userName}/receipts/{receiptId}/categories")]
+        public HttpResponseMessage GetCategoriesForReceipt(string userName, int receiptId)
+        {
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            var domainCategories = this.repository.GetUserReceiptCategories(userId, receiptId);
+
+            if (domainCategories == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, "No receipt with id " + receiptId + " for user " + userName);
+            }
+
+            var host = Request.RequestUri.Authority;
+            var categories = new List<CategoryModel>();
+
+            foreach (Category domainCategory in domainCategories)
+            {
+                var category = new CategoryModel(domainCategory, userName, receiptId, host);
+                categories.Add(category);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, categories);
+        }
     }
 }

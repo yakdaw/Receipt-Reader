@@ -18,7 +18,9 @@ namespace Receipt.API.Model.EF.DatabaseModel
         public string UserId { get; set; }
         public string Name { get; set; }
         public string PurchasePlace { get; set; }
+        public int CategoryId { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

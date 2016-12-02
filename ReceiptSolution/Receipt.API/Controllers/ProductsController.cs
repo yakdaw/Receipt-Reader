@@ -102,6 +102,48 @@
         }
 
         /// <summary>
+        /// Get products in receipt with specified category
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <param name="receiptId">Receipt ID</param>
+        /// <param name="categoryId">Category ID</param>
+        /// <response code="200">User products successfully sent.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        /// <response code="404">Receipt with specified ID not found.</response>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<ProductModel>))]
+        [Route("api/{userName}/receipts/{receiptId}/categories/{categoryId}/products")]
+        public HttpResponseMessage GetUserProductsByReceiptCategory(string userName, int receiptId, int categoryId)
+        {
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+            var domainProducts = this.repository.GetUserProductsByReceiptCategory(userId, receiptId, categoryId);
+
+            if (domainProducts == null)
+            {
+                return Request.CreateResponse
+                    (HttpStatusCode.NotFound, "No category with id " + categoryId + " in receipt " + receiptId + " for user " + userName);
+            }
+
+            var host = Request.RequestUri.Authority;
+            var products = new List<ProductModel>();
+
+            foreach (Product domainProduct in domainProducts)
+            {
+                var product = new ProductModel(domainProduct, userName, host);
+                products.Add(product);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, products);
+        }
+
+        /// <summary>
         /// Get specified user product
         /// </summary>
         /// <param name="userName">Name of user</param>

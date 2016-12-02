@@ -19,19 +19,17 @@
 
         public Collection<Product> GetAllUserProducts(string userId)
         {
-            List<DatabaseModel.Product> products;
+            var domainProducts = new Collection<Product>();
 
             using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
-                products = db.Product.Where(p => p.UserId == userId).ToList();
-            }
+                var dbProducts = db.Product.Where(p => p.UserId == userId);
 
-            var domainProducts = new Collection<Product>();
-
-            foreach (var product in products)
-            {
-                var domainProduct = productMapper.MapFromDatabase(product);
-                domainProducts.Add(domainProduct);
+                foreach (var product in dbProducts)
+                {
+                    var domainProduct = productMapper.MapFromDatabase(product);
+                    domainProducts.Add(domainProduct);
+                }
             }
 
             return domainProducts;
@@ -39,24 +37,46 @@
 
         public Collection<Product> GetUserProductsByReceipt(string userId, int receiptId)
         {
-            List<DatabaseModel.Product> products;
+            var domainProducts = new Collection<Product>();
 
             using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
-                products = db.Product.Where(p => (p.UserId == userId) && (p.ReceiptId == receiptId)).ToList();
+                var dbProducts = db.Product.Where(p => (p.UserId == userId) && (p.ReceiptId == receiptId));
+           
+                if (dbProducts.Count() == 0)
+                {
+                    return null;
+                }
+
+                foreach (var dbProduct in dbProducts)
+                {
+                    var domainProduct = productMapper.MapFromDatabase(dbProduct);
+                    domainProducts.Add(domainProduct);
+                }
             }
 
-            if (products.Count == 0)
-            {
-                return null;
-            }
+            return domainProducts;
+        }
 
+        public Collection<Product> GetUserProductsByReceiptCategory(string userId, int receiptId, int categoryId)
+        {
             var domainProducts = new Collection<Product>();
 
-            foreach (var product in products)
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
-                var domainProduct = productMapper.MapFromDatabase(product);
-                domainProducts.Add(domainProduct);
+                var dbProducts = db.Product.Where(p => (p.UserId == userId) && (p.ReceiptId == receiptId)
+                    && (p.CategoryId == categoryId));
+
+                if (dbProducts.Count() == 0)
+                {
+                    return null;
+                }
+
+                foreach (var dbProduct in dbProducts)
+                {
+                    var domainProduct = productMapper.MapFromDatabase(dbProduct);
+                    domainProducts.Add(domainProduct);
+                }
             }
 
             return domainProducts;
@@ -64,15 +84,15 @@
 
         public Product GetUserProductById(string userId, int receiptId, int productId)
         {
-            DatabaseModel.Product product;
+            var domainProduct = new Product();
 
             using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
-                product = db.Product.FirstOrDefault(p => (p.UserId == userId) && (p.ReceiptId == receiptId)
+                var dbProduct = db.Product.FirstOrDefault(p => (p.UserId == userId) && (p.ReceiptId == receiptId)
                     && (p.Id == productId));
-            }
 
-            var domainProduct = productMapper.MapFromDatabase(product);
+                domainProduct = productMapper.MapFromDatabase(dbProduct);
+            }
 
             return domainProduct;
         }
@@ -130,7 +150,7 @@
                 entry.Property(e => e.Name).IsModified = true;
                 entry.Property(e => e.Price).IsModified = true;
                 entry.Property(e => e.Quantity).IsModified = true;
-                entry.Property(e => e.Category).IsModified = true;
+                entry.Property(e => e.CategoryId).IsModified = true;
 
                 db.SaveChanges();
             }

@@ -9,7 +9,7 @@
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public string Category { get; set; }
+        public Category Category { get; set; }
 
         public string Url { get; set; }
 
@@ -20,7 +20,8 @@
             this.Name = domainProduct.Name;
             this.Price = domainProduct.Price;
             this.Quantity = domainProduct.Quantity;
-            this.Category = domainProduct.Category;
+
+            this.Category = domainProduct.Category; 
 
             this.Url = hostUrl + "/api/" + userName + "/receipts/" + this.ReceiptId + "/products/" + this.Id;
         }

@@ -11,11 +11,13 @@
     {
         private ReceiptMapper receiptMapper = null;
         private ProductMapper productMapper = null;
+        private CategoryMapper categoryMapper = null;
 
         public ReceiptRepository()
         {
             receiptMapper = new ReceiptMapper();
             productMapper = new ProductMapper();
+            categoryMapper = new CategoryMapper();
         }
 
         public Collection<Receipt> GetAllUserReceipts(string userId)
@@ -154,6 +156,37 @@
 
             var lastMax = query.Max(r => r.Id);
             return lastMax + 1;
+        }
+
+        public Collection<Category> GetUserReceiptCategories(string userId, int receiptId)
+        {
+            var domainCategories = new Collection<Category>();
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                var receipt = db.Receipt.FirstOrDefault(r => (r.UserId == userId) && (r.Id == receiptId));
+
+                if (receipt == null)
+                {
+                    return null;
+                }
+
+                var dbCategories = new List<DatabaseModel.Category>();
+
+                foreach (var dbProduct in receipt.Product)
+                {
+                    dbCategories.Add(dbProduct.Category);
+                }
+
+                var distinctDbCategories = dbCategories.Distinct();
+
+                foreach (var dbCategory in distinctDbCategories)
+                {
+                    domainCategories.Add(categoryMapper.MapFromDatabase(dbCategory));
+                }   
+            }
+
+            return domainCategories;
         }
     }
 }

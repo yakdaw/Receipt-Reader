@@ -30,6 +30,8 @@ namespace Receipt.API.Model.EF.DatabaseModel
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<BasicProduct> BasicProduct { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<CustomizedProduct> CustomizedProduct { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Receipt> Receipt { get; set; }
