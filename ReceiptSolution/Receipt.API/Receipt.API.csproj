@@ -198,7 +198,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Authentication\AuthContext.cs" />
     <Compile Include="Authentication\AuthRepository.cs" />
+    <Compile Include="Authentication\Entities\Client.cs" />
+    <Compile Include="Authentication\Entities\RefreshToken.cs" />
     <Compile Include="Controllers\ReceiptsController.cs" />
+    <Compile Include="Controllers\RefreshTokensController.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\LostPasswordModel.cs" />
     <Compile Include="Models\NewProductModel.cs" />
@@ -208,6 +212,7 @@
     <Compile Include="Models\UpdatedProductModel.cs" />
     <Compile Include="Models\UpdatedReceiptModel.cs" />
     <Compile Include="Models\ValidationAttributes\CannotBeEmptyAttribute.cs" />
+    <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
