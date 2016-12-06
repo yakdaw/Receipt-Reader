@@ -99,7 +99,6 @@
 
         public async Task<bool> AddRefreshToken(RefreshToken token)
         {
-
             var existingToken = context.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId).SingleOrDefault();
 
             if (existingToken != null)

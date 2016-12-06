@@ -2,11 +2,8 @@
 {
     using Authentication;
     using Authentication.Entities;
-    using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Infrastructure;
-    using Microsoft.Owin.Security.OAuth;
     using System;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     public class SimpleRefreshTokenProvider : IAuthenticationTokenProvider
@@ -51,7 +48,6 @@
 
         public async Task ReceiveAsync(AuthenticationTokenReceiveContext context)
         {
-
             var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 

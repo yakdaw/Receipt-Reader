@@ -33,6 +33,9 @@
 
                 identity.AddClaim(new Claim("id", user.Id));
                 identity.AddClaim(new Claim("name", user.UserName));
+
+                // For refresh token feature
+                identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             }
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
@@ -47,7 +50,7 @@
 
             var ticket = new AuthenticationTicket(identity, props);
 
-            context.Validated(identity);
+            context.Validated(ticket);
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
@@ -62,7 +65,6 @@
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-
             string clientId = string.Empty;
             string clientSecret = string.Empty;
             Client client = null;
