@@ -17,7 +17,7 @@
         public int Quantity { get; set; }
 
         [Display(Name = "Product category")]
-        public int CategoryId { get; set; }
+        public Category Category { get; set; }
 
         public Product MapToDomainProduct()
         {
@@ -28,7 +28,7 @@
             domainProduct.Quantity = this.Quantity;
             domainProduct.Category = new Category()
             {
-                Id = this.CategoryId
+                Id = this.Category.Id
             };
 
             return domainProduct;
