@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\PairMetricAlgorithm.cs" />
     <Compile Include="DatabaseModel\AspNetRoles.cs">
       <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
     </Compile>
@@ -102,6 +103,7 @@
     <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReceiptRepository.cs" />
+    <Compile Include="SuggestionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Receipt.Domain\Receipt.Domain.csproj">

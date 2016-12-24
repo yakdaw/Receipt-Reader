@@ -19,6 +19,8 @@
                 .InstancePerRequest();
             builder.RegisterType<ReceiptRepository>().As<IReceiptRepository>()
                 .InstancePerRequest();
+            builder.RegisterType<SuggestionService>().As<ISuggestionService>()
+                .InstancePerRequest();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

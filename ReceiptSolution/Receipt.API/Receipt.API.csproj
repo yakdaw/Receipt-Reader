@@ -200,6 +200,7 @@
     <Compile Include="Authentication\AuthRepository.cs" />
     <Compile Include="Authentication\Entities\Client.cs" />
     <Compile Include="Authentication\Entities\RefreshToken.cs" />
+    <Compile Include="Controllers\CategorySuggestionController.cs" />
     <Compile Include="Controllers\ReceiptsController.cs" />
     <Compile Include="Providers\Helper.cs" />
     <Compile Include="Models\CategoryModel.cs" />
