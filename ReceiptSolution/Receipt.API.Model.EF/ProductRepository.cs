@@ -3,7 +3,6 @@
     using Domain.Entities;
     using Mappers;
     using Model;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System;
@@ -11,10 +10,12 @@
     public class ProductRepository : IProductRepository
     {
         private ProductMapper productMapper = null;
+        private CustomizedProductService customizedProductService = null;
 
         public ProductRepository()
         {
             productMapper = new ProductMapper();
+            customizedProductService = new CustomizedProductService();
         }
 
         public Collection<Product> GetAllUserProducts(string userId)
@@ -114,6 +115,23 @@
                 db.Product.Add(databaseProduct);
 
                 db.SaveChanges();
+            }
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                var receipt = db.Receipt.FirstOrDefault(r => r.Id == receiptId);
+
+                if (customizedProductService.CheckForExisting(product, userId, receipt.PurchasePlace, db) == false)
+                {
+                    var dbCustomizedProduct = customizedProductService.MapToDatabase(product);
+                    dbCustomizedProduct.Id = customizedProductService.GenerateId(userId, db);
+                    dbCustomizedProduct.UserId = userId;
+                    dbCustomizedProduct.PurchasePlace = receipt.PurchasePlace;
+
+                    db.CustomizedProduct.Add(dbCustomizedProduct);
+
+                    db.SaveChanges();
+                }
             }
         }
 

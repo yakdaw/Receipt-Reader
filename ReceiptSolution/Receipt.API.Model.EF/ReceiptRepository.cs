@@ -12,12 +12,14 @@
         private ReceiptMapper receiptMapper = null;
         private ProductMapper productMapper = null;
         private CategoryMapper categoryMapper = null;
+        private CustomizedProductService customizedProductService = null;
 
         public ReceiptRepository()
         {
             receiptMapper = new ReceiptMapper();
             productMapper = new ProductMapper();
             categoryMapper = new CategoryMapper();
+            customizedProductService = new CustomizedProductService();
         }
 
         public Collection<Receipt> GetAllUserReceipts(string userId)
@@ -97,6 +99,24 @@
 
                     db.Product.Add(databaseProduct);
                     count++;
+                }
+
+                db.SaveChanges();
+            }
+
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                foreach (Product product in receipt.Products)
+                {
+                    if (customizedProductService.CheckForExisting(product, userId, receipt.PurchasePlace, db) == false)
+                    {
+                        var dbCustomizedProduct = customizedProductService.MapToDatabase(product);
+                        dbCustomizedProduct.Id = customizedProductService.GenerateId(userId, db);
+                        dbCustomizedProduct.UserId = userId;
+                        dbCustomizedProduct.PurchasePlace = receipt.PurchasePlace;
+
+                        db.CustomizedProduct.Add(dbCustomizedProduct);
+                    }
                 }
 
                 db.SaveChanges();

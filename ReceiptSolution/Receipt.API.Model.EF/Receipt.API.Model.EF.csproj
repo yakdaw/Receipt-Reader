@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\PairMetricAlgorithm.cs" />
+    <Compile Include="CustomizedProductService.cs" />
     <Compile Include="DatabaseModel\AspNetRoles.cs">
       <DependentUpon>ReceiptReaderModel.tt</DependentUpon>
     </Compile>
@@ -98,6 +99,7 @@
       <DependentUpon>ReceiptReaderModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Mappers\CategoryMapper.cs" />
+    <Compile Include="Mappers\CustomizedProductMapper.cs" />
     <Compile Include="Mappers\ProductMapper.cs" />
     <Compile Include="Mappers\ReceiptMapper.cs" />
     <Compile Include="ProductRepository.cs" />
