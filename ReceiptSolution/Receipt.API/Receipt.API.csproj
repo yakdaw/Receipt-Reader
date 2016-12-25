@@ -202,6 +202,7 @@
     <Compile Include="Authentication\Entities\RefreshToken.cs" />
     <Compile Include="Controllers\CategorySuggestionController.cs" />
     <Compile Include="Controllers\ReceiptsController.cs" />
+    <Compile Include="Models\CategorySuggestionModel.cs" />
     <Compile Include="Providers\Helper.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\LostPasswordModel.cs" />

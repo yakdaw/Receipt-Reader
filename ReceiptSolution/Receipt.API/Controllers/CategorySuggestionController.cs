@@ -1,9 +1,14 @@
 ﻿namespace Receipt.API.Controllers
 {
     using Model;
+    using Models;
     using Services;
+    using System.Net;
+    using System.Net.Http;
     using System.Web.Http;
+    using System.Web.Http.Description;
 
+    [Authorize]
     public class CategorySuggestionController : ApiController
     {
         private readonly ISuggestionService suggestionService;
@@ -15,13 +20,24 @@
             this.authService = new AuthService();
         }
 
-        [AllowAnonymous]
-        [Route("api/category/suggest/{productName}")]
-        public int SuggestCategory(string productName)
+        [HttpPost]
+        [ResponseType(typeof(int))]
+        [Route("api/{userName}/category/suggest")]
+        public HttpResponseMessage SuggestCategory(string userName, CategorySuggestionModel categorySuggestion)
         {
-            var categoryId = suggestionService.SuggestProductCategoryId(productName);
+            string tokenName = this.authService.GetUserName(this.User);
 
-            return categoryId;
+            if (!tokenName.Equals(userName))
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            var categoryId = suggestionService.SuggestProductCategoryId
+                (userId, categorySuggestion.ProductName, categorySuggestion.PurchasePlace);
+
+            return Request.CreateResponse(HttpStatusCode.OK, categoryId);
         }
     }
 }
