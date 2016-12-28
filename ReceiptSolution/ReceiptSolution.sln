@@ -20,6 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Receipt.API.Model.EF", "Rec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Receipt.Web", "Receipt.Web\Receipt.Web.csproj", "{45514F78-BE33-4B47-ACC5-0975AFBF13D1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{268CDE6D-827A-4741-8391-C62D8A668BF5} = {268CDE6D-827A-4741-8391-C62D8A668BF5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
