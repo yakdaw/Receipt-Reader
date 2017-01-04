@@ -1,0 +1,66 @@
+﻿@model Receipt.Web.ViewModels.PieChartModel
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+</head>
+
+<body>
+
+    <canvas id="productsChart" width="400" height="300"></canvas>
+    <script>
+        var ctx = document.getElementById("productsChart");
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: @Html.Raw(Json.Encode(Model.CategoryNames)),
+                datasets: [{
+                    label: 'Money spent',
+                    data: @Html.Raw(Json.Encode(Model.CategoryPrices)),
+                    backgroundColor: [
+                        'rgba(244, 67, 54, 1)',
+                        'rgba(233, 30, 99, 1)',
+                        'rgba(156, 39, 176, 1)',
+                        'rgba(103, 58, 183, 1)',
+                        'rgba(63, 81, 181, 1)',
+                        'rgba(33, 150, 243, 1)',
+                        'rgba(0, 188, 212, 1)',
+                        'rgba(0, 150, 136, 1)',
+                        'rgba(76, 175, 80, 1)',
+                        'rgba(139, 195, 74, 1)',
+                        'rgba(205, 220, 57, 1)',
+                        'rgba(255, 235, 59, 1)',
+                        'rgba(255, 193, 7, 1)',
+                        'rgba(255, 152, 0, 1)',
+                        'rgba(255, 87, 34, 1)',
+                        'rgba(183, 28, 28, 1)',
+                        'rgba(136, 14, 79, 1)',
+                        'rgba(74, 20, 140, 1)',
+                        'rgba(49, 27, 146, 1)',
+                        'rgba(26, 35, 126, 1)',
+                        'rgba(13, 71, 161, 1)',
+                        'rgba(1, 87, 155, 1)',
+                        'rgba(0, 96, 100, 1)',
+                        'rgba(0, 77, 64, 1)',
+                        'rgba(27, 94, 32, 1)',
+                        'rgba(51, 105, 30, 1)',
+                        'rgba(130, 119, 23, 1)',
+                        'rgba(230, 81, 0, 1)',
+                        'rgba(191, 54, 12, 1)',
+                        'rgba(62, 39, 35, 1)',
+                        'rgba(33, 33, 33, 1)'
+                    ]
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'left'
+                }
+            }
+        });
+    </script>
+    
+</body>
+
+</html>

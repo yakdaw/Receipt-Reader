@@ -146,6 +146,8 @@
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Web.config">
@@ -160,9 +162,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryPriceModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\LoginResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthorizationService.cs" />
+    <Compile Include="Services\ChartService.cs" />
+    <Compile Include="ViewModels\PieChartModel.cs" />
     <Compile Include="ViewModels\ProductModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +188,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\LostPassword.cshtml" />
     <Content Include="Views\Products\GetAllUserProducts.cshtml" />
+    <Content Include="Views\Products\GetChartData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

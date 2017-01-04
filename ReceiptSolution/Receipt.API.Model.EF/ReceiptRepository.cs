@@ -118,7 +118,8 @@
                         db.CustomizedProduct.Add(dbCustomizedProduct);
                     }
                 }
-
+                
+                // TUTAJ JE BUG
                 db.SaveChanges();
             }
         }
