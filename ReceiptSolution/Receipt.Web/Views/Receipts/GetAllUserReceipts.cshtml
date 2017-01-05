@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Receipt.Web.ViewModels.ReceiptModel>
+
+@foreach (var r in Model)
+{
+    <hr />
+
+    <div class="item">
+        <p>@r.Id @r.AddDate @r.ControlSum</p>
+    </div>
+}
+
+<tr />

@@ -159,6 +159,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ReceiptsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -169,6 +170,7 @@
     <Compile Include="Services\ChartService.cs" />
     <Compile Include="ViewModels\PieChartModel.cs" />
     <Compile Include="ViewModels\ProductModel.cs" />
+    <Compile Include="ViewModels\ReceiptModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config">
@@ -188,6 +190,8 @@
     <Content Include="Views\Account\LostPassword.cshtml" />
     <Content Include="Views\Products\GetAllUserProducts.cshtml" />
     <Content Include="Views\Products\GetChartData.cshtml" />
+    <Content Include="Views\Receipts\GetAllUserReceipts.cshtml" />
+    <Content Include="Views\Receipts\GetUserReceiptProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -197,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Receipt\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
