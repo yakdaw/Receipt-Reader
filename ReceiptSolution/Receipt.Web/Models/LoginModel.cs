@@ -4,12 +4,13 @@
 
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Enter username")]
         [Display(Name = "Login")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Enter password")]
         [Display(Name = "Password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
