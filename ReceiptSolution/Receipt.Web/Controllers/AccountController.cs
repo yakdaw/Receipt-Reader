@@ -19,17 +19,17 @@
 
         [HttpPost]
         [Route("login")]
-        public void Login(LoginModel suggestion)
+        public ActionResult Login(LoginModel login)
         {
             if (ModelState.IsValid)
             {
                 var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
                 var request = new RestRequest("token", Method.POST);
 
-                request.AddParameter("client_id", "mobileApp", ParameterType.GetOrPost);
+                request.AddParameter("client_id", "webApp", ParameterType.GetOrPost);
                 request.AddParameter("grant_type", "password", ParameterType.GetOrPost);
-                request.AddParameter("username", suggestion.Username, ParameterType.GetOrPost);
-                request.AddParameter("password", suggestion.Password, ParameterType.GetOrPost);
+                request.AddParameter("username", login.Username, ParameterType.GetOrPost);
+                request.AddParameter("password", login.Password, ParameterType.GetOrPost);
 
                 var response = client.Execute(request);
                 
@@ -42,8 +42,12 @@
 
                     HttpContext.Session["username"] = userName;
                     HttpContext.Session["access_token"] = accessToken;
-                }            
+
+                    return RedirectToRoute("ProductsChart");
+                }      
             }
+
+            return RedirectToAction("Login");
         }
 
         [Route("register")]

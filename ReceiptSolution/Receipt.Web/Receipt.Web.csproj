@@ -164,7 +164,6 @@
     </Compile>
     <Compile Include="Models\CategoryPriceModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\LoginResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
     <Compile Include="Services\ChartService.cs" />

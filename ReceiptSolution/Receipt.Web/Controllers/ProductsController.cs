@@ -20,16 +20,11 @@
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("", Name = "Products")]
         public ActionResult GetAllUserProducts()
         {
-            var userName = HttpContext.Session["username"];
-            var access = HttpContext.Session["access_token"];
-
             var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
-            var request = new RestRequest("api/" + userName + "/products/" , Method.GET);
-
-            request.AddHeader("Authorization", "Bearer " + access);
+            var request = authorizationService.GenerateAuthorizedRequest("/products/", Method.GET, HttpContext);
 
             var response = client.Execute<List<ProductModel>>(request).Data;
 
@@ -37,16 +32,11 @@
         }
 
         [HttpGet]
-        [Route("chart")]
+        [Route("chart", Name = "ProductsChart")]
         public ActionResult GetChartData()
         {
-            var userName = HttpContext.Session["username"];
-            var access = HttpContext.Session["access_token"];
-
             var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
-            var request = new RestRequest("api/" + userName + "/products/", Method.GET);
-
-            request.AddHeader("Authorization", "Bearer " + access);
+            var request = authorizationService.GenerateAuthorizedRequest("/products/", Method.GET, HttpContext);
 
             var responseProducts = client.Execute<List<ProductModel>>(request).Data;
 
