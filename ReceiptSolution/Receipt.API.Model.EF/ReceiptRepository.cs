@@ -106,20 +106,23 @@
 
             using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
+                var newCustomizedProductId = customizedProductService.GenerateId(userId, db);
+
                 foreach (Product product in receipt.Products)
                 {
                     if (customizedProductService.CheckForExisting(product, userId, receipt.PurchasePlace, db) == false)
                     {
                         var dbCustomizedProduct = customizedProductService.MapToDatabase(product);
-                        dbCustomizedProduct.Id = customizedProductService.GenerateId(userId, db);
                         dbCustomizedProduct.UserId = userId;
                         dbCustomizedProduct.PurchasePlace = receipt.PurchasePlace;
+
+                        dbCustomizedProduct.Id = newCustomizedProductId;
+                        newCustomizedProductId++;
 
                         db.CustomizedProduct.Add(dbCustomizedProduct);
                     }
                 }
                 
-                // TUTAJ JE BUG
                 db.SaveChanges();
             }
         }
