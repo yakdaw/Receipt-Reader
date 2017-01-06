@@ -14,6 +14,11 @@
         [Route("login", Name = "Login")]
         public ActionResult Login()
         {
+            if (HttpContext.Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -43,7 +48,7 @@
                     HttpContext.Session["username"] = userName;
                     HttpContext.Session["access_token"] = accessToken;
 
-                    return RedirectToRoute("Receipts");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -59,6 +64,11 @@
         [Route("register", Name = "Register")]
         public ActionResult Register()
         {
+            if (HttpContext.Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -94,6 +104,11 @@
         [Route("lostpassword", Name = "LostPassword")]
         public ActionResult LostPassword()
         {
+            if (HttpContext.Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -125,6 +140,11 @@
         [Route("resetpassword", Name = "ResetPassword")]
         public ActionResult ResetPassword(string email, string token)
         {
+            if (HttpContext.Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var passwordResetModel = new PasswordResetModel();
             passwordResetModel.Token = token;
 
@@ -158,6 +178,16 @@
 
             return RedirectToAction("ResetPassword",
                 new { email = passwordResetModel.Email, token = passwordResetModel.Token });
+        }
+
+        [HttpGet]
+        [Route("logout", Name = "Logout")]
+        public ActionResult Logout()
+        {
+            HttpContext.Session["username"] = null;
+            HttpContext.Session["access_token"] = null;
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

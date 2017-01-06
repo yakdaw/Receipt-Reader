@@ -16,13 +16,23 @@
     </head>
 
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     @Html.ActionLink("Receipt Reader", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 </div>
+
+                    @if (Session["access_token"] != null && Session["username"] != null)
+                    {
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#">@Session["username"]</a></li>
+                                <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                            </ul>
+                        </div>
+                    }
             </div>
-        </div>
+        </nav>
 
         <span style="display:block; height: 50px;"></span>
 
