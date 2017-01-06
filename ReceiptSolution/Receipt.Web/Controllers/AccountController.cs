@@ -147,7 +147,7 @@
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Login");
+                    return View("~/Views/Account/PasswordSuccessfullyReset.cshtml");
                 }
                 else
                 {

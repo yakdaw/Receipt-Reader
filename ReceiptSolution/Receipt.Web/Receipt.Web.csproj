@@ -203,6 +203,7 @@
     <Content Include="Views\Account\LostPasswordSent.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\AccountRegistered.cshtml" />
+    <Content Include="Views\Account\PasswordSuccessfullyReset.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
