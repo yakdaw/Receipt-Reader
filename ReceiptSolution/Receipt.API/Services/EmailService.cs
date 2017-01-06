@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net.Mail;
+    using System.Web.Configuration;
 
     public class EmailService
     {
@@ -15,7 +16,10 @@
                 mail.From = new MailAddress("receiptreader.service@gmail.com");
                 mail.To.Add(email);
                 mail.Subject = "ReceiptReader password reset";
-                mail.Body = "Your access token to reset the password: " + accessToken;
+                mail.Body = "Your access token to reset the password: \n" +
+                    WebConfigurationManager.AppSettings["webUrl"] +
+                    "account/resetpassword?email=" + email +
+                    "&token=" + accessToken;
 
                 smtpServer.Port = 587;
                 smtpServer.Credentials = new System.Net.NetworkCredential("receiptreader.service@gmail.com", "jackamwoj");

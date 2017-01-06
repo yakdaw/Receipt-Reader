@@ -1,5 +1,8 @@
 ﻿@model Receipt.Web.Models.LoginModel
 
+<div>Login into existing account:</div>
+<br />
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -22,13 +25,20 @@
             </div>
         </div>
 
-        <br />
+        @if (ViewBag.WrongUsernameMessage != null)
+        {
+            <div class="form-group">
+                <div class="col-lg-offset-2 text-danger">@ViewBag.WrongUsernameMessage</div>
+            </div>
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Login" class="btn btn-default" />
+                @Html.ActionLink("Don't remember password?", "LostPassword", new { controller = "Account" })
             </div>
         </div>
+
     </div>
 }
 

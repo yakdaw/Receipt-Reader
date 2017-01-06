@@ -70,7 +70,7 @@
 
         public async Task<IdentityResult> ResetPassword(string id, string token, string password)
         {
-            var result = await userManager.ResetPasswordAsync(id, HttpUtility.UrlDecode(token), password);
+            var result = await userManager.ResetPasswordAsync(id, token, password);
             return result;
         }
 

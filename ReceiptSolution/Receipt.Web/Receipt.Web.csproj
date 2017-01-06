@@ -170,6 +170,8 @@
     </Compile>
     <Compile Include="Models\CategoryPriceModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\LostPasswordModel.cs" />
+    <Compile Include="Models\PasswordResetModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
@@ -198,6 +200,9 @@
     <Content Include="Views\Products\GetChartData.cshtml" />
     <Content Include="Views\Receipts\GetAllUserReceipts.cshtml" />
     <Content Include="Views\Receipts\GetUserReceiptProducts.cshtml" />
+    <Content Include="Views\Account\LostPasswordSent.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\AccountRegistered.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
