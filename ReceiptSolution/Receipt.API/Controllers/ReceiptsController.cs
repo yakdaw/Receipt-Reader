@@ -1,16 +1,15 @@
 ﻿namespace Receipt.API.Controllers
 {
-    using Model;
     using Domain.Entities;
+    using Model;
+    using Models;
     using Services;
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
     using System.Web.Http.Description;
-    using Models;
-    using System.Threading.Tasks;
-    using System;
 
     /// <summary>
     /// Receipt based operations
@@ -21,12 +20,14 @@
         private readonly IReceiptRepository repository;
         private readonly AuthService authService;
         private readonly ResponseService responseService;
+        private readonly ControlSumService controlSumService;
 
         public ReceiptsController(IReceiptRepository repository)
         {
             this.repository = repository;
             this.authService = new AuthService();
             this.responseService = new ResponseService();
+            this.controlSumService = new ControlSumService();
         }
 
         /// <summary>
@@ -144,6 +145,11 @@
             if (!tokenName.Equals(userName))
             {
                 return Unauthorized();
+            }
+
+            if (!controlSumService.ValidateReceiptControlSum(receipt))
+            {
+                return BadRequest("Wrong control sum for receipt's products.");
             }
 
             string userId = this.authService.GetUserId(this.User);
