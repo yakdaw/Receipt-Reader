@@ -6,7 +6,9 @@
 
     public class SuggestionService : ISuggestionService
     {
-        public const double basicProductThreshold = 0.7;
+        public const double BasicProductThreshold = 0.7;
+        public const double OtherCategoryThreshold = 0.2;
+        public const int OtherCategoryId = 12;
 
         PairMetricAlgorithm algorithm = null;
 
@@ -35,7 +37,7 @@
                     }
                 }
                 
-                if (bestFitValue >= basicProductThreshold)
+                if (bestFitValue >= BasicProductThreshold)
                 {
                     return bestFitCategory;
                 }
@@ -57,6 +59,11 @@
                         bestFitCategory = customizedProduct.CategoryId;
                     }
                 }
+            }
+
+            if (bestFitValue < OtherCategoryThreshold)
+            {
+                return OtherCategoryId;
             }
 
             return bestFitCategory;
