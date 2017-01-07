@@ -113,6 +113,7 @@
                 databaseProduct.ReceiptId = receiptId;
 
                 db.Product.Add(databaseProduct);
+                UpdateReceiptControlSum(receiptId, userId, db);
 
                 db.SaveChanges();
             }
@@ -133,6 +134,13 @@
                     db.SaveChanges();
                 }
             }
+        }
+
+        private void UpdateReceiptControlSum
+            (int receiptId, string userId, DatabaseModel.ReceiptReaderDatabaseContext db)
+        {
+            var receipt = db.Receipt.FirstOrDefault(r => r.UserId == userId && r.Id == receiptId);
+            receipt.ControlSum = receipt.Product.Sum(p => p.Price * p.Quantity);
         }
 
         private int GenerateProductIdForReceipt(DatabaseModel.ReceiptReaderDatabaseContext db, string userId, int receiptId)
@@ -170,6 +178,8 @@
                 entry.Property(e => e.Quantity).IsModified = true;
                 entry.Property(e => e.CategoryId).IsModified = true;
 
+                UpdateReceiptControlSum(receiptId, userId, db);
+
                 db.SaveChanges();
             }
         }
@@ -202,6 +212,8 @@
                     db.Receipt.Attach(receipt);
                     db.Receipt.Remove(receipt);
                 }
+
+                UpdateReceiptControlSum(receiptId, userId, db);
 
                 db.SaveChanges();
             }
