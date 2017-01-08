@@ -1,6 +1,6 @@
 ﻿@model Receipt.Web.Models.LoginModel
 
-<div>Login into existing account:</div>
+<h3>Login into existing account:</h3>
 <br />
 
 @using (Html.BeginForm())
@@ -34,7 +34,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-default" />
+                <input type="submit" value="Login" class="btn btn-default btn-primary" />
                 @Html.ActionLink("Don't remember password?", "LostPassword", new { controller = "Account" })
             </div>
         </div>

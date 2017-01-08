@@ -1,14 +1,9 @@
 ﻿@model Receipt.Web.ViewModels.PieChartModel
 
-<!DOCTYPE HTML>
-<html>
-
-<head>
-</head>
-
 <body>
+    <h2>Expenses chart:</h2>
 
-    <canvas id="productsChart" width="400" height="300"></canvas>
+    <canvas id="productsChart" width="400" height="250"></canvas>
     <script>
         var ctx = document.getElementById("productsChart");
         var myChart = new Chart(ctx, {
@@ -60,7 +55,6 @@
             }
         });
     </script>
-    
-</body>
 
-</html>
+    <div>@Html.ActionLink("Go back", string.Empty, "Home")</div>
+</body>
