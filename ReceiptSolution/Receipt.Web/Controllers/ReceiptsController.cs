@@ -218,7 +218,18 @@
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    return RedirectToAction("GetUserReceiptProducts", new { receiptId = receiptId });
+                    // Check if receipt still exists
+                    request = authorizationService
+                        .GenerateAuthorizedRequest("/receipts/" + receiptId + "/products/", Method.GET, HttpContext);
+                    response = client.Execute(request);
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return RedirectToAction("GetUserReceiptProducts", new { receiptId = receiptId });
+                    }
+
+                    // If does not exist (last product was deleted)
+                    return RedirectToAction("");
                 }
                 else
                 {
