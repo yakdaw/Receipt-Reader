@@ -200,7 +200,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\LostPassword.cshtml" />
-    <Content Include="Views\Products\GetAllUserProducts.cshtml" />
     <Content Include="Views\Products\GetChartData.cshtml" />
     <Content Include="Views\Receipts\GetAllUserReceipts.cshtml" />
     <Content Include="Views\Receipts\GetUserReceiptProducts.cshtml" />
@@ -211,6 +210,7 @@
     <Content Include="Views\Receipts\AddNewProduct.cshtml" />
     <Content Include="Views\Receipts\UpdateReceipt.cshtml" />
     <Content Include="Views\Receipts\UpdateProduct.cshtml" />
+    <Content Include="Views\Home\NotExist.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

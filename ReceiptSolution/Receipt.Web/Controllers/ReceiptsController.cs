@@ -24,6 +24,11 @@
         [Route("", Name = "Receipts")]
         public ActionResult GetAllUserReceipts()
         {
+            if (HttpContext.Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
             var request = authorizationService.GenerateAuthorizedRequest("/receipts/", Method.GET, HttpContext);
 
@@ -36,29 +41,49 @@
         [Route("{receiptId}/products", Name = "ReceiptProducts")]
         public ActionResult GetUserReceiptProducts(int receiptId)
         {
+            if (HttpContext.Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
             var request = authorizationService
                 .GenerateAuthorizedRequest("/receipts/" + receiptId + "/products/", Method.GET, HttpContext);
 
             var response = client.Execute<List<ProductModel>>(request).Data;
 
-            return View(response);
+            if (response != null)
+            {
+                return View(response);
+            }
+
+            return View("~/Views/Home/NotExist.cshtml");
         }
 
         [HttpGet]
         [Route("{receiptId}/update", Name = "UpdateReceipt")]
         public ActionResult UpdateReceipt(int receiptId)
         {
+            if (HttpContext.Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
             var request = authorizationService.GenerateAuthorizedRequest
                 ("/receipts/" + receiptId, Method.GET, HttpContext);
 
             var receiptModel = client.Execute<ReceiptModel>(request).Data;
 
-            var receiptUpdateModel = new ReceiptUpdateModel();
-            receiptUpdateModel.MapFromApiModel(receiptModel);
+            if (receiptModel != null)
+            {
+                var receiptUpdateModel = new ReceiptUpdateModel();
+                receiptUpdateModel.MapFromApiModel(receiptModel);
 
-            return View(receiptUpdateModel);
+                return View(receiptUpdateModel);
+            }
+
+            return View("~/Views/Home/NotExist.cshtml");
         }
 
         [HttpPost]
@@ -125,9 +150,25 @@
 
         [HttpGet]
         [Route("{receiptId}/newproduct", Name = "NewProduct")]
-        public ActionResult AddNewProduct()
+        public ActionResult AddNewProduct(int receiptId)
         {
-            return View();
+            if (HttpContext.Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
+            var request = authorizationService
+                .GenerateAuthorizedRequest("/receipts/" + receiptId + "/products/", Method.GET, HttpContext);
+
+            var response = client.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return View();
+            }
+
+            return View("~/Views/Home/NotExist.cshtml");
         }
 
         [HttpPost]
@@ -163,16 +204,26 @@
         [Route("{receiptId}/products/{productId}/update", Name = "UpdateProduct")]
         public ActionResult UpdateProduct(int receiptId, int productId)
         {
+            if (HttpContext.Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
             var request = authorizationService.GenerateAuthorizedRequest
                 ("/receipts/" + receiptId + "/products/" + productId, Method.GET, HttpContext);
 
             var productModel = client.Execute<ProductModel>(request).Data;
 
-            var productUpdateModel = new ProductUpdateModel();
-            productUpdateModel.MapFromApiModel(productModel);
+            if (productModel != null)
+            {
+                var productUpdateModel = new ProductUpdateModel();
+                productUpdateModel.MapFromApiModel(productModel);
 
-            return View(productUpdateModel);
+                return View(productUpdateModel);
+            }
+
+            return View("~/Views/Home/NotExist.cshtml");
         }
 
         [HttpPost]

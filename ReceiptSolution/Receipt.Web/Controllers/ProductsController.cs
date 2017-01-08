@@ -20,21 +20,14 @@
         }
 
         [HttpGet]
-        [Route("", Name = "Products")]
-        public ActionResult GetAllUserProducts()
-        {
-            var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
-            var request = authorizationService.GenerateAuthorizedRequest("/products/", Method.GET, HttpContext);
-
-            var response = client.Execute<List<ProductModel>>(request).Data;
-
-            return View(response);
-        }
-
-        [HttpGet]
         [Route("chart", Name = "ProductsChart")]
         public ActionResult GetChartData()
         {
+            if (HttpContext.Session["username"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
             var request = authorizationService.GenerateAuthorizedRequest("/products/", Method.GET, HttpContext);
 
