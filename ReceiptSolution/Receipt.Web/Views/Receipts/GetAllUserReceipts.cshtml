@@ -1,47 +1,55 @@
 ﻿@model IEnumerable<Receipt.Web.ViewModels.ReceiptModel>
+@using System
 
-<h2>Receipts:</h2>
+@if (Model.Count() != 0)
+{
+    <h2>Receipts:</h2>
 
-<table class="table table-striped table-hover ">
-    <tr>
-        <th>Add date</th>
-        <th>Purchase date</th>
-        <th>Purchase place</th>
-        <th>Price summary</th>
-    </tr>
-    @foreach (var r in Model)
-    {
+    <table class="table table-striped table-hover ">
         <tr>
-            <td>@r.AddDate</td>
-            @if (r.PurchaseDate != null)
-            {
-                <td>@r.PurchaseDate</td>
-            }
-            else
-            {
-                <td>-</td>
-            }
-            @if (r.PurchasePlace != null)
-            {
-                <td>@r.PurchasePlace</td>
-            }
-            else
-            {
-                <td>-</td>
-            }
-            <td>@r.ControlSum zł</td>
-            <td>@Html.ActionLink("Show", r.Id + "/products/", new { controller = "Receipts" }, new { @class = "btn btn-primary btn-xs" })</td>
-            <td>@Html.ActionLink("Update", r.Id + "/update/", new { controller = "Receipts", receiptModel = @r }, new { @class = "btn btn-success btn-xs" })</td>
-            <td>
-                @using (Html.BeginForm(@r.Id.ToString(), "Receipts", FormMethod.Post,
-                    new { style = "display:inline;" }))
-                { <input type="submit" value="Delete" class="btn btn-danger btn-xs" /> }
-            </td>
+            <th>Add date</th>
+            <th>Purchase date</th>
+            <th>Purchase place</th>
+            <th>Price summary</th>
         </tr>
-    }
-</table>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.AddDate.ToShortDateString()</td>
+                @if (r.PurchaseDate != null)
+                {
+                    <td>@(((DateTime)r.PurchaseDate).ToShortDateString())</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
+                @if (r.PurchasePlace != null)
+                {
+                    <td>@r.PurchasePlace</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
+                <td>@r.ControlSum zł</td>
+                <td>@Html.ActionLink("Show", r.Id + "/products/", new { controller = "Receipts" }, new { @class = "btn btn-primary btn-xs" })</td>
+                <td>@Html.ActionLink("Update", r.Id + "/update/", new { controller = "Receipts", receiptModel = @r }, new { @class = "btn btn-success btn-xs" })</td>
+                <td>
+                    @using (Html.BeginForm(@r.Id.ToString(), "Receipts", FormMethod.Post,
+                    new { style = "display:inline;" }))
+                    { <input type="submit" value="Delete" class="btn btn-danger btn-xs" /> }
+                </td>
+            </tr>
+        }
+    </table>
 
-<h2 align="center">Overall price: @Model.Sum(r => r.ControlSum) zł</h2>
+    <h2 align="center">Overall price: @Model.Sum(r => r.ControlSum) zł</h2>
+}
+else
+{
+    <h3>Your receipt list is empty, add new receipt to see it!</h3>
+}
 
 <br />
 

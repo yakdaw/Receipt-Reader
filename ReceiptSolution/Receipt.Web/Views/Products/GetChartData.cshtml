@@ -1,10 +1,13 @@
 ﻿@model Receipt.Web.ViewModels.PieChartModel
 
 <body>
-    <h2>Expenses chart:</h2>
 
-    <canvas id="productsChart" width="400" height="250"></canvas>
-    <script>
+    @if (Model.CategoryNames.Length != 0)
+    {
+        <h2>Expenses chart:</h2>
+
+            <canvas id="productsChart" width="400" height="250"></canvas>
+            <script>
         var ctx = document.getElementById("productsChart");
         var myChart = new Chart(ctx, {
             type: 'pie',
@@ -54,7 +57,14 @@
                 }
             }
         });
-    </script>
+            </script>
+    }
+    else
+    {
+        <h3>Expenses chart is empty, add receipts to see it!</h3>
+    }
+
+    <br />
 
     <div>@Html.ActionLink("Go back", string.Empty, "Home")</div>
 </body>
