@@ -277,5 +277,29 @@
 
             return Request.CreateResponse(HttpStatusCode.OK, categories);
         }
+
+        /// <summary>
+        /// Add new empty user receipt
+        /// </summary>
+        /// <param name="userName">Name of user</param>
+        /// <response code="200">User receipt successfully added.</response>
+        /// <response code="401">No authentication token. / Wrong user name in query.</response>
+        [HttpPost]
+        [Route("api/{userName}/receipts/newempty")]
+        public IHttpActionResult AddNewEmptyUserReceipt(string userName)
+        {
+            string tokenName = this.authService.GetUserName(this.User);
+
+            if (!tokenName.Equals(userName))
+            {
+                return Unauthorized();
+            }
+
+            string userId = this.authService.GetUserId(this.User);
+
+            repository.AddEmpty(userId);
+
+            return Ok();
+        }
     }
 }

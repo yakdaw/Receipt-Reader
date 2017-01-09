@@ -212,5 +212,32 @@
 
             return domainCategories;
         }
+
+        public void AddEmpty(string userId)
+        {
+            using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
+            {
+                var databaseReceipt = new DatabaseModel.Receipt();
+
+                databaseReceipt.Id = GenerateReceiptIdForUser(db, userId);
+                databaseReceipt.UserId = userId;
+                databaseReceipt.AddDate = DateTime.Now;
+
+                db.Receipt.Add(databaseReceipt);
+
+                var firstProduct = new DatabaseModel.Product();
+                firstProduct.Id = 1;
+                firstProduct.UserId = userId;
+                firstProduct.ReceiptId = databaseReceipt.Id;
+                firstProduct.Name = "Update me";
+                firstProduct.Price = 0m;
+                firstProduct.Quantity = 0;
+                firstProduct.CategoryId = 12;
+
+                db.Product.Add(firstProduct);
+
+                db.SaveChanges();
+            }
+        }
     }
 }

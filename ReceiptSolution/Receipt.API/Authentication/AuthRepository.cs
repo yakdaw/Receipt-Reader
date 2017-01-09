@@ -28,7 +28,7 @@
 
             userManager.UserTokenProvider = new DataProtectorTokenProvider<IdentityUser>(Startup.dataProtectionProvider.Create("UserToken"))
             {
-                TokenLifespan = TimeSpan.FromHours(3)
+                TokenLifespan = TimeSpan.FromHours(24)
             };
         }
 
@@ -36,7 +36,7 @@
         {
             IdentityUser user = new IdentityUser
             {
-                UserName = userModel.Name,
+                UserName = userModel.Name.ToLower(),
                 Email = userModel.Email
             };
 
