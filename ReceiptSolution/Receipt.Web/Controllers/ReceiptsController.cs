@@ -60,6 +60,24 @@
             return View("~/Views/Home/NotExist.cshtml");
         }
 
+        [HttpPost]
+        [Route("", Name = "AddNewEmptyReceipt")]
+        public ActionResult AddEmptyReceipt()
+        {
+            var client = new RestClient(WebConfigurationManager.AppSettings["webApiUrl"]);
+            var request = authorizationService.GenerateAuthorizedRequest
+                ("/receipts/newempty/" , Method.POST, HttpContext);
+
+            var response = client.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return RedirectToAction("");
+            }
+
+            return View();
+        }
+
         [HttpGet]
         [Route("{receiptId}/update", Name = "UpdateReceipt")]
         public ActionResult UpdateReceipt(int receiptId)

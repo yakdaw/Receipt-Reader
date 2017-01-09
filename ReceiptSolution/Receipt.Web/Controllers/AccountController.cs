@@ -45,7 +45,7 @@
                     var userName = (string)content["userName"];
                     var accessToken = (string)content["access_token"];
 
-                    HttpContext.Session["username"] = userName;
+                    HttpContext.Session["username"] = userName.ToLower();
                     HttpContext.Session["access_token"] = accessToken;
 
                     return RedirectToAction("Index", "Home");
