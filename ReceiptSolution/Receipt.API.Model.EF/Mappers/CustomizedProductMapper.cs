@@ -12,7 +12,7 @@
             }
 
             var dbCustomizedProduct = new DatabaseModel.CustomizedProduct();
-            dbCustomizedProduct.Name = domainProduct.Name;
+            dbCustomizedProduct.Name = domainProduct.Name.ToUpper();
             dbCustomizedProduct.CategoryId = domainProduct.Category.Id;
 
             return dbCustomizedProduct;

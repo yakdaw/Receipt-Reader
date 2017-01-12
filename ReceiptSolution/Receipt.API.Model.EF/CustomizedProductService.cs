@@ -22,13 +22,13 @@
         {
             if (purchasePlace != null)
             {
-                return db.CustomizedProduct.Any
-                    (cp => cp.UserId == userId && cp.Name == product.Name);
+                return db.BasicProduct.Any(bp => bp.Name == product.Name) || 
+                    db.CustomizedProduct.Any(cp => cp.UserId == userId && cp.Name == product.Name);
             }
             else
             {
-                return db.CustomizedProduct.Any
-                    (cp => cp.UserId == userId && cp.PurchasePlace == purchasePlace && cp.Name == product.Name);
+                return db.BasicProduct.Any(bp => bp.Name == product.Name) || 
+                    db.CustomizedProduct.Any(cp => cp.UserId == userId && cp.PurchasePlace == purchasePlace && cp.Name == product.Name);
             }
         }
 

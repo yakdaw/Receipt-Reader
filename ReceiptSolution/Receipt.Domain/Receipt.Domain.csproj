@@ -44,6 +44,7 @@
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Receipt.cs" />
+    <Compile Include="Models\ProductWithCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

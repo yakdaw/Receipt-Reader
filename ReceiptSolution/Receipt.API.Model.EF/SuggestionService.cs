@@ -1,13 +1,14 @@
 ﻿namespace Receipt.API.Model.EF
 {
     using Algorithms;
+    using Domain.Models;
     using Model;
     using System.Linq;
 
     public class SuggestionService : ISuggestionService
     {
-        public const double BasicProductThreshold = 0.7;
-        public const double OtherCategoryThreshold = 0.2;
+        public const double BasicProductThreshold = 0.8;
+        public const double OtherCategoryThreshold = 0.4;
         public const int OtherCategoryId = 12;
 
         PairMetricAlgorithm algorithm = null;
@@ -17,10 +18,11 @@
             algorithm = new PairMetricAlgorithm();
         }
 
-        public int SuggestProductCategoryId(string userId, string productName, string purchasePlace)
+        public ProductWithCategory SuggestProductCategoryId(string userId, string productName, string purchasePlace)
         {
             var bestFitValue = -1.0;
             var bestFitCategory = -1;
+            string bestFitProductName = null;
 
             using (var db = new DatabaseModel.ReceiptReaderDatabaseContext())
             {
@@ -34,12 +36,14 @@
                     {
                         bestFitValue = nameFit;
                         bestFitCategory = basicProduct.CategoryId;
+                        bestFitProductName = basicProduct.Name;
                     }
                 }
                 
                 if (bestFitValue >= BasicProductThreshold)
                 {
-                    return bestFitCategory;
+                    return new ProductWithCategory()
+                    { ProductName = bestFitProductName, CategoryId = bestFitCategory };
                 }
                 
                 var customizedProducts = db.CustomizedProduct.Where(cp => cp.UserId == userId).ToList();
@@ -57,16 +61,19 @@
                     {
                         bestFitValue = nameFit;
                         bestFitCategory = customizedProduct.CategoryId;
+                        bestFitProductName = customizedProduct.Name;
                     }
                 }
             }
 
             if (bestFitValue < OtherCategoryThreshold)
             {
-                return OtherCategoryId;
+                return new ProductWithCategory()
+                { ProductName = null, CategoryId = OtherCategoryId };
             }
 
-            return bestFitCategory;
+            return new ProductWithCategory()
+            { ProductName = bestFitProductName, CategoryId = bestFitCategory };
         }
     }
 }
