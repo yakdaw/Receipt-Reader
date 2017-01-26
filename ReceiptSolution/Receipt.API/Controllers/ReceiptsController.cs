@@ -149,7 +149,8 @@
 
             if (!controlSumService.ValidateReceiptControlSum(receipt))
             {
-                return BadRequest("Wrong control sum for receipt's products.");
+                return BadRequest("Wrong control sum. (Server - " + controlSumService.ReceiptProductsSum(receipt) + 
+                    ", Sent - " + receipt.ControlSum + ")");
             }
 
             string userId = this.authService.GetUserId(this.User);
