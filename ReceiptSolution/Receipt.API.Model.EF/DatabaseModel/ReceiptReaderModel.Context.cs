@@ -35,5 +35,8 @@ namespace Receipt.API.Model.EF.DatabaseModel
         public virtual DbSet<CustomizedProduct> CustomizedProduct { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Receipt> Receipt { get; set; }
+        public virtual DbSet<Clients> Clients { get; set; }
+        public virtual DbSet<RefreshTokens> RefreshTokens { get; set; }
+        public virtual DbSet<SuggestionProduct> SuggestionProduct { get; set; }
     }
 }
