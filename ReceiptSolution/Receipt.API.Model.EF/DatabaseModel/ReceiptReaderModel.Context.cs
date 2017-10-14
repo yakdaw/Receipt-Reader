@@ -39,4 +39,16 @@ namespace Receipt.API.Model.EF.DatabaseModel
         public virtual DbSet<RefreshTokens> RefreshTokens { get; set; }
         public virtual DbSet<SuggestionProduct> SuggestionProduct { get; set; }
     }
+
+    public class SuggestionProduct
+    {
+    }
+
+    public class RefreshTokens
+    {
+    }
+
+    public class Clients
+    {
+    }
 }
