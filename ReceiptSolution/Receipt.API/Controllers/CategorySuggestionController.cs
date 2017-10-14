@@ -1,5 +1,6 @@
 ﻿namespace Receipt.API.Controllers
 {
+    using Domain.Models;
     using Model;
     using Models;
     using Services;
@@ -26,13 +27,13 @@
         /// </summary>
         /// <param name="userName">User name</param>
         /// <param name="categorySuggestion">Product name and purchase place</param>
-        /// <response code="200">Successfully suggested category ID.</response>
+        /// <response code="200">Successfully suggested product with category ID.</response>
         /// <response code="400">Wrong JSON request model.</response>
         /// <response code="401">No authentication token. / Wrong user name in query.</response>
         [HttpPost]
-        [ResponseType(typeof(int))]
+        [ResponseType(typeof(CategorySuggestionResponse))]
         [Route("api/{userName}/category/suggest")]
-        public HttpResponseMessage SuggestCategory(string userName, CategorySuggestionModel categorySuggestion)
+        public HttpResponseMessage Suggest(string userName, CategorySuggestionModel categorySuggestion)
         {
             if (!ModelState.IsValid)
             {
@@ -48,24 +49,26 @@
 
             string userId = this.authService.GetUserId(this.User);
 
-            var categoryId = suggestionService.SuggestProductCategoryId
+            var productWithCategory = suggestionService.SuggestProductCategoryId
                 (userId, categorySuggestion.ProductName, categorySuggestion.PurchasePlace);
 
-            return Request.CreateResponse(HttpStatusCode.OK, categoryId);
+            var response = new CategorySuggestionResponse(productWithCategory);
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         /// <summary>
-        /// Suggest categories for products list
+        /// Suggest products with categories for products list
         /// </summary>
         /// <param name="userName">User name</param>
         /// <param name="categorySuggestions">Products names and purchase places</param>
-        /// <response code="200">Successfully suggested categories IDs.</response>
+        /// <response code="200">Successfully suggested products with category IDs.</response>
         /// <response code="400">Wrong JSON request model.</response>
         /// <response code="401">No authentication token. / Wrong user name in query.</response>
         [HttpPost]
-        [ResponseType(typeof(IEnumerable<int>))]
+        [ResponseType(typeof(IEnumerable<CategorySuggestionResponse>))]
         [Route("api/{userName}/category/suggestMultiple")]
-        public HttpResponseMessage SuggestCategories(string userName, IEnumerable<CategorySuggestionModel> categorySuggestions)
+        public HttpResponseMessage SuggestMultiple(string userName, IEnumerable<CategorySuggestionModel> categorySuggestions)
         {
             if (!ModelState.IsValid)
             {
@@ -81,14 +84,14 @@
 
             string userId = this.authService.GetUserId(this.User);
 
-            var categoryIds = new List<int>();
+            var categoryIds = new List<CategorySuggestionResponse>();
 
             foreach (var categorySuggestion in categorySuggestions)
             {
-                var categoryId = suggestionService.SuggestProductCategoryId
+                var productWithCategory = suggestionService.SuggestProductCategoryId
                     (userId, categorySuggestion.ProductName, categorySuggestion.PurchasePlace);
 
-                categoryIds.Add(categoryId);
+                categoryIds.Add(new CategorySuggestionResponse(productWithCategory));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, categoryIds);

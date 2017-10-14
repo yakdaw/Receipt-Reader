@@ -16,5 +16,10 @@
 
             return false;
         }
+
+        public decimal ReceiptProductsSum(NewReceiptModel receipt)
+        {
+            return receipt.Products.Sum(p => p.Price * p.Quantity);
+        }
     }
 }

@@ -203,6 +203,7 @@
     <Compile Include="Controllers\CategorySuggestionController.cs" />
     <Compile Include="Controllers\ReceiptsController.cs" />
     <Compile Include="Models\CategorySuggestionModel.cs" />
+    <Compile Include="Models\CategorySuggestionResponse.cs" />
     <Compile Include="Providers\Helper.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\LostPasswordModel.cs" />
@@ -229,6 +230,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\receiptsolution - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\receiptsolution - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
