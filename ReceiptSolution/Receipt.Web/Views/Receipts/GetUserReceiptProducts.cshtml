@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Receipt.Web.ViewModels.ProductModel>
+
+<h3>Receipt products:</h3>
+
+<table class="table table-striped table-hover ">
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Price sum</th>
+    </tr>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Name</td>
+            <td>@p.Category.Name</td>
+            <td>@p.Quantity</td>
+            <td>@p.Price zł</td>
+            <td>@(p.Price * p.Quantity) zł</td>
+         
+            <td>@Html.ActionLink("Update", p.ReceiptId + "/products/" + p.Id + "/update/", new { controller = "Receipts" }, 
+               new { @class = "btn btn-success btn-xs" })</td>
+            <td>
+                @using (Html.BeginForm(@p.ReceiptId + "/products/" + @p.Id, "Receipts", FormMethod.Post,
+                    new { style = "display:inline;" }))
+                { <input type="submit" value="Delete" class="btn btn-danger btn-xs" /> }
+            </td>
+        </tr>
+    }
+</table>
+
+<h3 align="center">Overall price: @Model.Sum(p => p.Price * p.Quantity) zł</h3>
+
+<div>
+    @Html.ActionLink("Add product", "AddNewProduct", new { controller = "Receipts" },
+               new { @class = "btn btn-success" })
+</div>
+
+<br />
+
+<div>@Html.ActionLink("Go back to receipt list", "", "Receipts")</div>
+
+<br />

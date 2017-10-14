@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ca53d6b5eb2743788f4d7e9dd4aa9d53" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.C__MigrationHistory" Width="1.75" PointX="2.25" PointY="1.125" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.AspNetRoles" Width="1.5" PointX="1.125" PointY="10" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.AspNetUserClaims" Width="1.625" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.AspNetUserLogins" Width="1.625" PointX="2.875" PointY="10" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.AspNetUsers" Width="1.5" PointX="2.75" PointY="5.125" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.BasicProduct" Width="1.5" PointX="9.625" PointY="3.875" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.Category" Width="1.5" PointX="7.5" PointY="4" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.CustomizedProduct" Width="1.75" PointX="5" PointY="3.625" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.Product" Width="1.5" PointX="7.25" PointY="6.5" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.Receipt" Width="1.5" PointX="5" PointY="6.5" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.FK_CustomizedProduct_AspNetUsers" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.FK_Receipt_AspNetUsers" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.FK_BasicProductCategory" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.FK_CustomizedProductCategory" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.FK_ProductCategory" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.FK_Product_Receipt" />
+        <AssociationConnector Association="ReceiptReaderDatabaseModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.Clients" Width="1.5" PointX="0.5" PointY="6.875" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.RefreshTokens" Width="1.5" PointX="0.5" PointY="4.5" />
+        <EntityTypeShape EntityType="ReceiptReaderDatabaseModel.SuggestionProduct" Width="1.75" PointX="9.625" PointY="5.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
