@@ -222,6 +222,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="connectionStrings.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\receiptsolution - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\receiptsolution - Web Deploy.pubxml" />
